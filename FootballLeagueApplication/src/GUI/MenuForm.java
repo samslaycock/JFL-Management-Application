@@ -49,8 +49,18 @@ public class MenuForm extends javax.swing.JFrame {
         });
 
         buttonPeople.setText("Manage People");
+        buttonPeople.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                buttonPeopleActionPerformed(evt);
+            }
+        });
 
         buttonGames.setText("Manage Games");
+        buttonGames.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                buttonGamesActionPerformed(evt);
+            }
+        });
 
         buttonLeagueTable.setText("League Table");
         buttonLeagueTable.addActionListener(new java.awt.event.ActionListener() {
@@ -103,6 +113,8 @@ public class MenuForm extends javax.swing.JFrame {
 
     private void buttonLeagueTableActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonLeagueTableActionPerformed
         // TODO add your handling code here:
+        LeagueTableForm ltf = new LeagueTableForm();
+        ltf.setVisible(true);
     }//GEN-LAST:event_buttonLeagueTableActionPerformed
 
     private void buttonTeamsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonTeamsActionPerformed
@@ -110,6 +122,18 @@ public class MenuForm extends javax.swing.JFrame {
         ManageTeamsForm tf = new ManageTeamsForm();
         tf.setVisible(true);
     }//GEN-LAST:event_buttonTeamsActionPerformed
+
+    private void buttonPeopleActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonPeopleActionPerformed
+        // TODO add your handling code here:
+        ManagePeopleForm pf = new ManagePeopleForm();
+        pf.setVisible(true);
+    }//GEN-LAST:event_buttonPeopleActionPerformed
+
+    private void buttonGamesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonGamesActionPerformed
+        // TODO add your handling code here:
+        ManageGamesForm gf = new ManageGamesForm();
+        gf.setVisible(true);
+    }//GEN-LAST:event_buttonGamesActionPerformed
 
     /**
      * @param args the command line arguments

@@ -90,11 +90,17 @@
       <Properties>
         <Property name="text" type="java.lang.String" value="Manage People"/>
       </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="buttonPeopleActionPerformed"/>
+      </Events>
     </Component>
     <Component class="javax.swing.JButton" name="buttonGames">
       <Properties>
         <Property name="text" type="java.lang.String" value="Manage Games"/>
       </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="buttonGamesActionPerformed"/>
+      </Events>
     </Component>
     <Component class="javax.swing.JButton" name="buttonLeagueTable">
       <Properties>

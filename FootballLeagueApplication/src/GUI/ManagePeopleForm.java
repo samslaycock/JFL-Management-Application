@@ -29,25 +29,28 @@ public class ManagePeopleForm extends javax.swing.JFrame {
 
         jLabel1 = new javax.swing.JLabel();
         jSeparator1 = new javax.swing.JSeparator();
-        buttonAddPeople = new javax.swing.JButton();
-        buttonManagePeople = new javax.swing.JButton();
+        buttonAddPerson = new javax.swing.JButton();
         buttonViewPeople = new javax.swing.JButton();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        setTitle("Manage People");
 
         jLabel1.setFont(new java.awt.Font("Calibri", 1, 14)); // NOI18N
         jLabel1.setText("Manage People");
 
-        buttonAddPeople.setText("Add People\n");
-        buttonAddPeople.addActionListener(new java.awt.event.ActionListener() {
+        buttonAddPerson.setText("Add Person");
+        buttonAddPerson.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                buttonAddPeopleActionPerformed(evt);
+                buttonAddPersonActionPerformed(evt);
             }
         });
 
-        buttonManagePeople.setText("Manage People");
-
-        buttonViewPeople.setText("View People");
+        buttonViewPeople.setText("View People\n");
+        buttonViewPeople.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                buttonViewPeopleActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -65,8 +68,7 @@ public class ManagePeopleForm extends javax.swing.JFrame {
                 .addGap(130, 130, 130)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addComponent(buttonViewPeople, javax.swing.GroupLayout.PREFERRED_SIZE, 140, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(buttonManagePeople, javax.swing.GroupLayout.PREFERRED_SIZE, 140, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(buttonAddPeople, javax.swing.GroupLayout.PREFERRED_SIZE, 140, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(buttonAddPerson, javax.swing.GroupLayout.PREFERRED_SIZE, 140, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
@@ -76,10 +78,8 @@ public class ManagePeopleForm extends javax.swing.JFrame {
                 .addComponent(jLabel1)
                 .addGap(0, 0, 0)
                 .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, 4, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
-                .addComponent(buttonAddPeople)
-                .addGap(18, 18, 18)
-                .addComponent(buttonManagePeople)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(buttonAddPerson)
                 .addGap(18, 18, 18)
                 .addComponent(buttonViewPeople)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
@@ -88,11 +88,17 @@ public class ManagePeopleForm extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void buttonAddPeopleActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonAddPeopleActionPerformed
+    private void buttonAddPersonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonAddPersonActionPerformed
         // TODO add your handling code here:
-        ManageTeamsForm tf = new ManageTeamsForm();
-        tf.setVisible(true);
-    }//GEN-LAST:event_buttonAddPeopleActionPerformed
+        AddPersonForm apf = new AddPersonForm();
+        apf.setVisible(true);
+    }//GEN-LAST:event_buttonAddPersonActionPerformed
+
+    private void buttonViewPeopleActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonViewPeopleActionPerformed
+        // TODO add your handling code here:
+        ViewPeopleForm vpf = new ViewPeopleForm();
+        vpf.setVisible(true);
+    }//GEN-LAST:event_buttonViewPeopleActionPerformed
 
     /**
      * @param args the command line arguments
@@ -130,8 +136,7 @@ public class ManagePeopleForm extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton buttonAddPeople;
-    private javax.swing.JButton buttonManagePeople;
+    private javax.swing.JButton buttonAddPerson;
     private javax.swing.JButton buttonViewPeople;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JSeparator jSeparator1;
