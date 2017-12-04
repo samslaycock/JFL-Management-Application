@@ -33,12 +33,12 @@ public class Player extends DBConnection {
         try {
             int recordCount;
             try {
-                final String countQuery = "SELECT COUNT(PlayerID) FROM jfl.players";
+                final String countQuery = "SELECT COUNT(PlayerID) AS playerCount FROM jfl.players";
                 this.setQuery(countQuery);
                 this.runQuery();
                 ResultSet output = this.getResultSet();
                 output.next();
-                recordCount = output.getInt("COUNT(PlayerID)");
+                recordCount = output.getInt("playerCount");
                 }
             catch(SQLException sqle) {
                 recordCount = 0;

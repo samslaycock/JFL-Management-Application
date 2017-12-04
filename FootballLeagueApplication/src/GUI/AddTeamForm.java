@@ -5,6 +5,8 @@
  */
 package GUI;
 
+import Classes.Team;
+
 /**
  *
  * @author blao
@@ -16,6 +18,7 @@ public class AddTeamForm extends javax.swing.JFrame {
      */
     public AddTeamForm() {
         initComponents();
+        
     }
 
     /**
@@ -40,6 +43,11 @@ public class AddTeamForm extends javax.swing.JFrame {
         jLabel2.setText("Team Name:");
 
         buttonAdd.setText("Add");
+        buttonAdd.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                buttonAddActionPerformed(evt);
+            }
+        });
 
         txtTeamName.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -98,6 +106,17 @@ public class AddTeamForm extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_txtTeamNameActionPerformed
 
+    private void buttonAddActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonAddActionPerformed
+        // TODO add your handling code here:
+        String teamName;
+        teamName = txtTeamName.getText();
+       
+        Team t = new Team("jflDB");
+        t.insertRecord(teamName);
+        t.closeConnection();
+        
+    }//GEN-LAST:event_buttonAddActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -132,6 +151,8 @@ public class AddTeamForm extends javax.swing.JFrame {
             }
         });
     }
+    
+    
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton buttonAdd;

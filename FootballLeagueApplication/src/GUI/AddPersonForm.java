@@ -5,6 +5,8 @@
  */
 package GUI;
 
+import Classes.*;
+
 /**
  *
  * @author blao
@@ -17,6 +19,7 @@ public class AddPersonForm extends javax.swing.JFrame {
     public AddPersonForm() {
         initComponents();
         displayElements();
+        cmbTeamPopulate();
     }
 
     /**
@@ -35,7 +38,7 @@ public class AddPersonForm extends javax.swing.JFrame {
         cmbPersonType = new javax.swing.JComboBox<>();
         jLabel4 = new javax.swing.JLabel();
         txtFirstName = new javax.swing.JTextField();
-        txtSurname = new javax.swing.JTextField();
+        txtLastName = new javax.swing.JTextField();
         jSeparator2 = new javax.swing.JSeparator();
         cmbTeam = new javax.swing.JComboBox<>();
         lblTeam = new javax.swing.JLabel();
@@ -62,7 +65,7 @@ public class AddPersonForm extends javax.swing.JFrame {
             }
         });
 
-        jLabel4.setText("Surname:");
+        jLabel4.setText("Last Name:");
 
         txtFirstName.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -70,9 +73,9 @@ public class AddPersonForm extends javax.swing.JFrame {
             }
         });
 
-        txtSurname.addActionListener(new java.awt.event.ActionListener() {
+        txtLastName.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                txtSurnameActionPerformed(evt);
+                txtLastNameActionPerformed(evt);
             }
         });
 
@@ -115,7 +118,7 @@ public class AddPersonForm extends javax.swing.JFrame {
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
                             .addComponent(txtFirstName, javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(cmbPersonType, javax.swing.GroupLayout.Alignment.LEADING, 0, 145, Short.MAX_VALUE)
-                            .addComponent(txtSurname))
+                            .addComponent(txtLastName))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(jSeparator2, javax.swing.GroupLayout.PREFERRED_SIZE, 13, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -151,7 +154,7 @@ public class AddPersonForm extends javax.swing.JFrame {
                             .addComponent(jLabel3))
                         .addGap(18, 18, 18)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(txtSurname, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(txtLastName, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jLabel4)))
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
@@ -176,9 +179,9 @@ public class AddPersonForm extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_txtFirstNameActionPerformed
 
-    private void txtSurnameActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtSurnameActionPerformed
+    private void txtLastNameActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtLastNameActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_txtSurnameActionPerformed
+    }//GEN-LAST:event_txtLastNameActionPerformed
 
     private void cmbPersonTypeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cmbPersonTypeActionPerformed
         // TODO add your handling code here:
@@ -189,10 +192,32 @@ public class AddPersonForm extends javax.swing.JFrame {
     private void buttonAddActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonAddActionPerformed
         // TODO add your handling code here:
         int selectedType;
+        String firstName;
+        String lastName;
+        int teamID;
+        String position;
+        
         selectedType = cmbPersonType.getSelectedIndex();
-        if(selectedType == 2){
-            
+        firstName = txtFirstName.getText();
+        lastName = txtLastName.getText();
+        teamID = cmbTeam.getSelectedIndex();
+        position = String.valueOf(cmbPosition.getSelectedItem());
+        
+        switch (selectedType){
+            case 0: ;
+                break;
+            case 1: ;
+                break;
+            case 2: Player p = new Player("jflDB");
+                    p.insertRecord(firstName, lastName, teamID, position);
+                    p.closeConnection();
+                    break; 
+            case 3: ;
+                break; 
         }
+        
+        
+       
     }//GEN-LAST:event_buttonAddActionPerformed
 
     /**
@@ -251,6 +276,17 @@ public class AddPersonForm extends javax.swing.JFrame {
             }
         }
     }
+    
+    private void cmbTeamPopulate(){
+        Team t = new Team("jflDB");
+        String[] teams = t.populateTeamComboBox();
+        
+       for( int i=0; i<teams.length ; i++){
+           cmbTeam.addItem(teams[i]);
+        }
+        
+        
+    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton buttonAdd;
@@ -267,6 +303,6 @@ public class AddPersonForm extends javax.swing.JFrame {
     private javax.swing.JLabel lblPosition;
     private javax.swing.JLabel lblTeam;
     private javax.swing.JTextField txtFirstName;
-    private javax.swing.JTextField txtSurname;
+    private javax.swing.JTextField txtLastName;
     // End of variables declaration//GEN-END:variables
 }
