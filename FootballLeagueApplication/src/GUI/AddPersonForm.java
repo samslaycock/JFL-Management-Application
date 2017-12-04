@@ -16,6 +16,7 @@ public class AddPersonForm extends javax.swing.JFrame {
      */
     public AddPersonForm() {
         initComponents();
+        displayElements();
     }
 
     /**
@@ -37,9 +38,9 @@ public class AddPersonForm extends javax.swing.JFrame {
         txtSurname = new javax.swing.JTextField();
         jSeparator2 = new javax.swing.JSeparator();
         cmbTeam = new javax.swing.JComboBox<>();
-        jLabel5 = new javax.swing.JLabel();
+        lblTeam = new javax.swing.JLabel();
         cmbPosition = new javax.swing.JComboBox<>();
-        jLabel6 = new javax.swing.JLabel();
+        lblPosition = new javax.swing.JLabel();
         jSeparator3 = new javax.swing.JSeparator();
         buttonAdd = new javax.swing.JButton();
 
@@ -54,6 +55,7 @@ public class AddPersonForm extends javax.swing.JFrame {
         jLabel3.setText("First Name:");
 
         cmbPersonType.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Coach", "Manager", "Player", "Referee" }));
+        cmbPersonType.setSelectedIndex(-1);
         cmbPersonType.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 cmbPersonTypeActionPerformed(evt);
@@ -78,13 +80,19 @@ public class AddPersonForm extends javax.swing.JFrame {
 
         cmbTeam.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { " " }));
 
-        jLabel5.setText("Team:");
+        lblTeam.setText("Team:");
 
         cmbPosition.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Attacking Midfielder", "Center-back", "Central Midfielder", "Defending Midfielder", "Full-back", "Goalkeeper", "Second Striker", "Striker", "Sweeper", "Wing-back", "Wing Midfielder", " " }));
+        cmbPosition.setSelectedIndex(-1);
 
-        jLabel6.setText("Position:");
+        lblPosition.setText("Position:");
 
         buttonAdd.setText("Add");
+        buttonAdd.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                buttonAddActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -112,17 +120,17 @@ public class AddPersonForm extends javax.swing.JFrame {
                         .addComponent(jSeparator2, javax.swing.GroupLayout.PREFERRED_SIZE, 13, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(jLabel6)
-                            .addComponent(jLabel5))
+                            .addComponent(lblPosition)
+                            .addComponent(lblTeam))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(cmbPosition, 0, 153, Short.MAX_VALUE)
-                            .addComponent(cmbTeam, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
+                            .addComponent(cmbTeam, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(0, 0, Short.MAX_VALUE)
+                        .addComponent(buttonAdd)
+                        .addGap(0, 0, Short.MAX_VALUE)))
                 .addContainerGap())
-            .addGroup(layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(buttonAdd)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -147,12 +155,12 @@ public class AddPersonForm extends javax.swing.JFrame {
                             .addComponent(jLabel4)))
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jLabel5)
+                            .addComponent(lblTeam)
                             .addComponent(cmbTeam, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGap(18, 18, 18)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(cmbPosition, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLabel6)))
+                            .addComponent(lblPosition)))
                     .addComponent(jSeparator2, javax.swing.GroupLayout.PREFERRED_SIZE, 102, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jSeparator3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -174,8 +182,18 @@ public class AddPersonForm extends javax.swing.JFrame {
 
     private void cmbPersonTypeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cmbPersonTypeActionPerformed
         // TODO add your handling code here:
+        this.displayElements();
       
     }//GEN-LAST:event_cmbPersonTypeActionPerformed
+
+    private void buttonAddActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonAddActionPerformed
+        // TODO add your handling code here:
+        int selectedType;
+        selectedType = cmbPersonType.getSelectedIndex();
+        if(selectedType == 2){
+            
+        }
+    }//GEN-LAST:event_buttonAddActionPerformed
 
     /**
      * @param args the command line arguments
@@ -208,8 +226,30 @@ public class AddPersonForm extends javax.swing.JFrame {
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
                 new AddPersonForm().setVisible(true);
+                
+               
             }
         });
+    }
+    
+    private void displayElements() {
+        int selectedIndex;
+        selectedIndex = cmbPersonType.getSelectedIndex();
+        if ((selectedIndex == -1) || (selectedIndex == 3)) {
+            cmbTeam.setVisible(false);
+            lblTeam.setVisible(false);
+            cmbPosition.setVisible(false);
+            lblPosition.setVisible(false);
+        } else if ((selectedIndex == 0) || (selectedIndex == 1) || (selectedIndex == 2)) {
+            cmbTeam.setVisible(true);
+            lblTeam.setVisible(true);
+            cmbPosition.setVisible(false);
+            lblPosition.setVisible(false);
+            if (selectedIndex == 2) {
+                cmbPosition.setVisible(true);
+                lblPosition.setVisible(true);
+            }
+        }
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -221,11 +261,11 @@ public class AddPersonForm extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
-    private javax.swing.JLabel jLabel5;
-    private javax.swing.JLabel jLabel6;
     private javax.swing.JSeparator jSeparator1;
     private javax.swing.JSeparator jSeparator2;
     private javax.swing.JSeparator jSeparator3;
+    private javax.swing.JLabel lblPosition;
+    private javax.swing.JLabel lblTeam;
     private javax.swing.JTextField txtFirstName;
     private javax.swing.JTextField txtSurname;
     // End of variables declaration//GEN-END:variables
