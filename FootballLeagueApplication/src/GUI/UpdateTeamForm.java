@@ -6,6 +6,8 @@
 
 package GUI;
 
+import Classes.Team;
+
 /**
  *
  * @author blao
@@ -15,6 +17,7 @@ public class UpdateTeamForm extends javax.swing.JFrame {
     /** Creates new form UpdateTeamForm */
     public UpdateTeamForm() {
         initComponents();
+        cmbTeamPopulate();
     }
 
     /** This method is called from within the constructor to
@@ -65,6 +68,13 @@ public class UpdateTeamForm extends javax.swing.JFrame {
         txtTeamName.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 txtTeamNameActionPerformed(evt);
+            }
+        });
+
+        cmbSelectTeam.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { " " }));
+        cmbSelectTeam.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                cmbSelectTeamActionPerformed(evt);
             }
         });
 
@@ -149,6 +159,10 @@ public class UpdateTeamForm extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_txtTeamNameActionPerformed
 
+    private void cmbSelectTeamActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cmbSelectTeamActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_cmbSelectTeamActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -182,6 +196,18 @@ public class UpdateTeamForm extends javax.swing.JFrame {
                 new UpdateTeamForm().setVisible(true);
             }
         });
+    }
+    
+    private void cmbTeamPopulate(){
+        Team t = new Team("jflDB");
+        String[] teams = t.populateTeamComboBox();
+        
+       for( int i=0; i<teams.length ; i++){
+           cmbSelectTeam.addItem(teams[i]);
+        }
+       
+        t.closeConnection();
+        
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

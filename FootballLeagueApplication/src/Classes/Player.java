@@ -59,5 +59,48 @@ public class Player extends DBConnection {
             System.out.println("Exception when inserting player record:" + sqle.toString());
         }
     }
+    
+    
+    public Object[][] loadTeamPlayers(int teamid){
+        int recordCount;
+        try {
+            final String countQuery = "SELECT COUNT(PlayerID) AS playerCount FROM jfl.players WHERE TeamID="+teamid;
+            this.setQuery(countQuery);
+            this.runQuery();
+            ResultSet output = this.getResultSet();
+            output.next();
+            recordCount = output.getInt("playerCount");
+        } catch (SQLException sqle) {
+            recordCount = 0;
+            System.out.println("Exception when getting Player count:" + sqle.toString());
+        }
+        
+        Object[][] playerRecords = new Object[recordCount][5];
+        int arrayCount = 0;
+        try {
+            final String allQuery = "SELECT * FROM jfl.players WHERE TeamID="+teamid;
+            this.setQuery(allQuery);
+            this.runQuery();
+            ResultSet output = this.getResultSet();
+            while ((output.next()) && (arrayCount < recordCount)) {
+                playerRecords[arrayCount][0] = "Player";
+                playerRecords[arrayCount][1] = output.getString("PlayerID");
+                playerRecords[arrayCount][2] = output.getString("FirstName");
+                playerRecords[arrayCount][3] = output.getString("LastName");
+                playerRecords[arrayCount][4] = output.getString("TeamPosition");
+                arrayCount++;
+            }
+        } catch (SQLException sqle) {
+            System.out.println("Exception when inserting populating player array:" + sqle.toString());
+        }
+        return playerRecords;
+    }
 
-}
+        
+        
+       
+    }
+    
+    
+    
+

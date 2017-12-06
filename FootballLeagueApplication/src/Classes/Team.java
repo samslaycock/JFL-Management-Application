@@ -37,12 +37,12 @@ public class Team extends DBConnection {
         try {
             int recordCount;
             try {
-                final String countQuery = "SELECT COUNT(TeamID) FROM jfl.teams";
+                final String countQuery = "SELECT COUNT(TeamID) AS teamCount FROM jfl.teams";
                 this.setQuery(countQuery);
                 this.runQuery();
                 ResultSet output = this.getResultSet();
                 output.next();
-                recordCount = output.getInt("COUNT(TeamID)");
+                recordCount = output.getInt("teamCount");
             } catch (SQLException sqle) {
                 recordCount = 0;
             }

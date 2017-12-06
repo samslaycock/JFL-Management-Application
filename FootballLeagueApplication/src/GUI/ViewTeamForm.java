@@ -5,6 +5,12 @@
  */
 package GUI;
 
+import Classes.Coach;
+import Classes.Manager;
+import Classes.Player;
+import Classes.Team;
+import javax.swing.table.DefaultTableModel;
+
 /**
  *
  * @author blao
@@ -16,6 +22,7 @@ public class ViewTeamForm extends javax.swing.JFrame {
      */
     public ViewTeamForm() {
         initComponents();
+        cmbTeamPopulate();
     }
 
     /**
@@ -43,21 +50,17 @@ public class ViewTeamForm extends javax.swing.JFrame {
 
         tableTeamMembers.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null}
+
             },
             new String [] {
-                "Type", "First Name", "Last Name", "Position"
+                "Type", "ID", "First Name", "Last Name", "Position"
             }
         ) {
             Class[] types = new Class [] {
-                java.lang.Object.class, java.lang.String.class, java.lang.String.class, java.lang.Object.class
+                java.lang.Object.class, java.lang.Object.class, java.lang.String.class, java.lang.String.class, java.lang.Object.class
             };
             boolean[] canEdit = new boolean [] {
-                false, false, false, false
+                false, false, false, false, false
             };
 
             public Class getColumnClass(int columnIndex) {
@@ -69,6 +72,13 @@ public class ViewTeamForm extends javax.swing.JFrame {
             }
         });
         jScrollPane1.setViewportView(tableTeamMembers);
+
+        cmbTeamNames.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { " " }));
+        cmbTeamNames.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                cmbTeamNamesActionPerformed(evt);
+            }
+        });
 
         jLabel2.setText("Team Name:");
 
@@ -114,6 +124,12 @@ public class ViewTeamForm extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    private void cmbTeamNamesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cmbTeamNamesActionPerformed
+        // TODO add your handling code here:
+        int selectedTeam = cmbTeamNames.getSelectedIndex();
+        this.loadTeamMembers(selectedTeam);
+    }//GEN-LAST:event_cmbTeamNamesActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -148,6 +164,74 @@ public class ViewTeamForm extends javax.swing.JFrame {
                 new ViewTeamForm().setVisible(true);
             }
         });
+    }
+    
+    private void cmbTeamPopulate(){
+        Team t = new Team("jflDB");
+        String[] teams = t.populateTeamComboBox();
+        
+       for( int i=0; i<teams.length ; i++){
+           cmbTeamNames.addItem(teams[i]);
+        }
+       
+        t.closeConnection();
+        
+    }
+    
+    private void loadTeamMembers(int teamid){
+        DefaultTableModel model =(DefaultTableModel) tableTeamMembers.getModel();
+       
+        model.setRowCount(0);
+       
+        String type;
+        String id;
+        String firstName;
+        String lastName;
+        String position;
+      
+        Manager m = new Manager("jflDB");
+        Object[][] managers = m.loadTeamManagers(teamid);
+        for (int i=0; i< managers.length;i++){
+            type = managers[i][0].toString();
+            id = managers[i][1].toString();
+            firstName = managers[i][2].toString();
+            lastName = managers[i][3].toString();
+            position = managers[i][4].toString();
+          model.addRow(new Object[]{type, id, firstName,lastName,position});
+        }
+        m.closeConnection();
+        
+        Coach c = new Coach("jflDB");
+        Object[][] coaches = c.loadTeamCoaches(teamid);
+        for (int i=0; i< coaches.length;i++){
+            type = coaches[i][0].toString();
+            id = coaches[i][1].toString();
+            firstName = coaches[i][2].toString();
+            lastName = coaches[i][3].toString();
+            position = coaches[i][4].toString();
+          model.addRow(new Object[]{type, id, firstName,lastName,position});
+        }
+        c.closeConnection();
+        
+        Player p = new Player("jflDB");
+        Object[][] players = p.loadTeamPlayers(teamid);
+        for (int i=0; i< players.length;i++){
+            type = players[i][0].toString();
+            id = players[i][1].toString();
+            firstName = players[i][2].toString();
+            lastName = players[i][3].toString();
+            position = players[i][4].toString();
+          model.addRow(new Object[]{type, id, firstName,lastName,position});
+        }
+        p.closeConnection();
+        
+        
+        
+        //model.addRow(new Object[][] );
+        
+        
+      
+ 
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

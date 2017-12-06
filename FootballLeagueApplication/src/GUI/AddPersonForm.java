@@ -6,6 +6,7 @@
 package GUI;
 
 import Classes.*;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -204,20 +205,28 @@ public class AddPersonForm extends javax.swing.JFrame {
         position = String.valueOf(cmbPosition.getSelectedItem());
         
         switch (selectedType){
-            case 0: ;
+            case 0: Coach c = new Coach("jflDB");
+                    c.insertRecord(firstName, lastName, teamID);
+                    c.closeConnection();
+                    this.recordAdded();
                 break;
-            case 1: ;
-                break;
+            case 1: Manager m = new Manager("jflDB");
+                    m.insertRecord(firstName, lastName, teamID);
+                    m.closeConnection();
+                     this.recordAdded();
+                    break;
             case 2: Player p = new Player("jflDB");
                     p.insertRecord(firstName, lastName, teamID, position);
                     p.closeConnection();
+                     this.recordAdded();
                     break; 
-            case 3: ;
-                break; 
-        }
+            case 3: Referee r = new Referee("jflDB");
+                    r.insertRecord(firstName, lastName);
+                    r.closeConnection();
+                     this.recordAdded(); 
+                    break; 
+        }  
         
-        
-       
     }//GEN-LAST:event_buttonAddActionPerformed
 
     /**
@@ -284,9 +293,20 @@ public class AddPersonForm extends javax.swing.JFrame {
        for( int i=0; i<teams.length ; i++){
            cmbTeam.addItem(teams[i]);
         }
-        
+       
+        t.closeConnection();
         
     }
+    
+    private void recordAdded(){
+        JOptionPane.showMessageDialog(this, "Record successfully added.");
+        cmbPersonType.setSelectedIndex(-1);
+        cmbPosition.setSelectedIndex(-1);
+        cmbTeam.setSelectedIndex(-1);
+        txtFirstName.setText("");
+        txtLastName.setText("");
+    }
+    
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton buttonAdd;
