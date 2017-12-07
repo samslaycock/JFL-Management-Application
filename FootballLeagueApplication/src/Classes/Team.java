@@ -92,5 +92,23 @@ public class Team extends DBConnection {
         }
         return comboArray;
     }
+    
+    public String getTeamName(int teamid){
+         String teamName = "";
+        try {
+            final String allQuery = "SELECT TeamName FROM jfl.teams WHERE TeamID="+teamid;
+            this.setQuery(allQuery);
+            this.runQuery();
+            ResultSet output = this.getResultSet();
+            output.next();
+            teamName = output.getString("TeamName");
+           
+        } catch (SQLException sqle) {
+            System.out.println("Exception when inserting obtaining Team Name:" + sqle.toString());
+
+        }
+        
+        return teamName;  
+    }
 
 }

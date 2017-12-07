@@ -5,6 +5,9 @@
  */
 package GUI;
 
+import Classes.Player;
+import javax.swing.table.DefaultTableModel;
+
 /**
  *
  * @author blao
@@ -16,6 +19,7 @@ public class ViewPeopleForm extends javax.swing.JFrame {
      */
     public ViewPeopleForm() {
         initComponents();
+        loadPeopleTable();
     }
 
     /**
@@ -40,21 +44,17 @@ public class ViewPeopleForm extends javax.swing.JFrame {
 
         tablePeople.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null, null},
-                {null, null, null, null, null},
-                {null, null, null, null, null},
-                {null, null, null, null, null},
-                {null, null, null, null, null}
+
             },
             new String [] {
-                "Type", "First Name", "Last Name", "Team", "Position"
+                "Type", "ID", "First Name", "Last Name", "Team", "Position"
             }
         ) {
             Class[] types = new Class [] {
-                java.lang.Object.class, java.lang.String.class, java.lang.String.class, java.lang.Object.class, java.lang.Object.class
+                java.lang.String.class, java.lang.Integer.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class
             };
             boolean[] canEdit = new boolean [] {
-                false, false, false, false, false
+                false, false, false, false, false, false
             };
 
             public Class getColumnClass(int columnIndex) {
@@ -130,6 +130,34 @@ public class ViewPeopleForm extends javax.swing.JFrame {
             }
         });
     }
+    
+    private void loadPeopleTable(){
+        DefaultTableModel model =(DefaultTableModel) tablePeople.getModel();
+       
+        model.setRowCount(0);
+       
+        String type;
+        String id;
+        String firstName;
+        String lastName;
+        String teamName;
+        String position;
+        
+         Player p = new Player("jflDB");
+        Object[][] players = p.loadAllPlayers();
+        for (int i=0; i< players.length;i++){
+            type = players[i][0].toString();
+            id = players[i][1].toString();
+            firstName = players[i][2].toString();
+            lastName = players[i][3].toString();
+            teamName = players[i][4].toString();
+            position = players[i][5].toString();
+          model.addRow(new Object[]{type, id, firstName,lastName,teamName,position});
+        }
+        p.closeConnection();
+        
+    
+        }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel jLabel1;
