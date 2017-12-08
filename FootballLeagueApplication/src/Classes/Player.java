@@ -135,10 +135,7 @@ public class Player extends DBConnection {
         }
         return playerRecords;
     }
-        
-   
-        
-        
+
        
     }
     

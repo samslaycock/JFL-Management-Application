@@ -101,6 +101,46 @@ public class Coach extends DBConnection {
         return coachRecords;
 
     }
+    
+    public Object[][] loadAllCoaches(){
+            int recordCount;
+        try {
+            final String countQuery = "SELECT COUNT(CoachID) AS coachCount FROM jfl.coaches";
+            this.setQuery(countQuery);
+            this.runQuery();
+            ResultSet output = this.getResultSet();
+            output.next();
+            recordCount = output.getInt("coachCount");
+        } catch (SQLException sqle) {
+            recordCount = 0;
+            System.out.println("Exception when getting Coach count:" + sqle.toString());
+        }
+        
+        Object[][] coachRecords = new Object[recordCount][6];
+        int arrayCount = 0;
+        try {
+            final String allQuery = "SELECT * FROM jfl.coaches";
+            this.setQuery(allQuery);
+            this.runQuery();
+            ResultSet output = this.getResultSet();
+            while ((output.next()) && (arrayCount < recordCount)) {
+                Team t = new Team("jflDB");
+                String teamName = t.getTeamName(output.getInt("TeamID"));
+                t.closeConnection();
+
+                coachRecords[arrayCount][0] = "Coach";
+                coachRecords[arrayCount][1] = output.getString("CoachID");
+                coachRecords[arrayCount][2] = output.getString("FirstName");
+                coachRecords[arrayCount][3] = output.getString("LastName");
+                coachRecords[arrayCount][4] = teamName;
+                coachRecords[arrayCount][5] = "Coach";
+                arrayCount++;
+            }
+        } catch (SQLException sqle) {
+            System.out.println("Exception when inserting populating coach array:" + sqle.toString());
+        }
+        return coachRecords;
+    }
 
     
 }

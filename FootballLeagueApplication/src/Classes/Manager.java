@@ -102,8 +102,45 @@ public class Manager extends DBConnection {
         return playerRecords;
     }
     
-    
-    
+    public Object[][] loadAllManagers(){
+            int recordCount;
+        try {
+            final String countQuery = "SELECT COUNT(ManagerID) AS managerCount FROM jfl.managers";
+            this.setQuery(countQuery);
+            this.runQuery();
+            ResultSet output = this.getResultSet();
+            output.next();
+            recordCount = output.getInt("managerCount");
+        } catch (SQLException sqle) {
+            recordCount = 0;
+            System.out.println("Exception when getting Manager count:" + sqle.toString());
+        }
+        
+        Object[][] managerRecords = new Object[recordCount][6];
+        int arrayCount = 0;
+        try {
+            final String allQuery = "SELECT * FROM jfl.managers";
+            this.setQuery(allQuery);
+            this.runQuery();
+            ResultSet output = this.getResultSet();
+            while ((output.next()) && (arrayCount < recordCount)) {
+                Team t = new Team("jflDB");
+                String teamName = t.getTeamName(output.getInt("TeamID"));
+                t.closeConnection();
+
+                managerRecords[arrayCount][0] = "Manager";
+                managerRecords[arrayCount][1] = output.getString("ManagerID");
+                managerRecords[arrayCount][2] = output.getString("FirstName");
+                managerRecords[arrayCount][3] = output.getString("LastName");
+                managerRecords[arrayCount][4] = teamName;
+                managerRecords[arrayCount][5] = "Manager";
+                arrayCount++;
+            }
+        } catch (SQLException sqle) {
+            System.out.println("Exception when inserting populating manager array:" + sqle.toString());
+        }
+        return managerRecords;
+    }
     
     
 }

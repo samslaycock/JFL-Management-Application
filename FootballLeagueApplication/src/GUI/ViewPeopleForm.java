@@ -5,7 +5,10 @@
  */
 package GUI;
 
+import Classes.Coach;
+import Classes.Manager;
 import Classes.Player;
+import Classes.Referee;
 import javax.swing.table.DefaultTableModel;
 
 /**
@@ -143,7 +146,7 @@ public class ViewPeopleForm extends javax.swing.JFrame {
         String teamName;
         String position;
         
-         Player p = new Player("jflDB");
+        Player p = new Player("jflDB");
         Object[][] players = p.loadAllPlayers();
         for (int i=0; i< players.length;i++){
             type = players[i][0].toString();
@@ -156,7 +159,48 @@ public class ViewPeopleForm extends javax.swing.JFrame {
         }
         p.closeConnection();
         
-    
+        Manager m = new Manager("jflDB");
+        Object[][] managers = m.loadAllManagers();
+        for (int i=0; i< managers.length;i++){
+            type = managers[i][0].toString();
+            id = managers[i][1].toString();
+            firstName = managers[i][2].toString();
+            lastName = managers[i][3].toString();
+            teamName = managers[i][4].toString();
+            position = managers[i][5].toString();
+          model.addRow(new Object[]{type, id, firstName,lastName,teamName,position});
+        }
+        m.closeConnection();
+        
+        Coach c = new Coach("jflDB");
+        Object[][] coaches = c.loadAllCoaches();
+        for (int i=0; i< coaches.length;i++){
+            type = coaches[i][0].toString();
+            id = coaches[i][1].toString();
+            firstName = coaches[i][2].toString();
+            lastName = coaches[i][3].toString();
+            teamName = coaches[i][4].toString();
+            position = coaches[i][5].toString();
+          model.addRow(new Object[]{type, id, firstName,lastName,teamName,position});
+        }
+        c.closeConnection();
+        
+        Referee r = new Referee("jflDB");
+        Object[][] referees = r.loadAllReferees();
+        for (int i=0; i< referees.length;i++){
+            type = referees[i][0].toString();
+            id = referees[i][1].toString();
+            firstName = referees[i][2].toString();
+            lastName = referees[i][3].toString();
+            teamName = referees[i][4].toString();
+            position = referees[i][5].toString();
+          model.addRow(new Object[]{type, id, firstName,lastName,teamName,position});
+        }
+        r.closeConnection();
+        
+        
+        
+        
         }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
