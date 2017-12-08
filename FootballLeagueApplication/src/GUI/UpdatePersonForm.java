@@ -68,6 +68,7 @@ public class UpdatePersonForm extends javax.swing.JFrame {
         jLabel3.setText("First Name:");
 
         cmbPersonType.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Coach", "Manager", "Player", "Referee" }));
+        cmbPersonType.setEnabled(false);
         cmbPersonType.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 cmbPersonTypeActionPerformed(evt);
