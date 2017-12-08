@@ -5,6 +5,9 @@
  */
 package GUI;
 
+import Classes.Coach;
+import Classes.Team;
+
 /**
  *
  * @author blao
@@ -13,10 +16,21 @@ public class UpdatePersonForm extends javax.swing.JFrame {
 
     /**
      * Creates new form UpdatePersonForm
+     *  @param type type of person being updated (player, coach, manager, referee)
+     *  @param id id number of person being updated
      */
-    public UpdatePersonForm() {
+    public UpdatePersonForm(String type, int id) {
+        initComponents();
+        displayElements();
+        cmbTeamPopulate();
+        loadDetails(type, id);
+        
+    }
+    
+    public UpdatePersonForm(){
         initComponents();
     }
+    
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -28,7 +42,7 @@ public class UpdatePersonForm extends javax.swing.JFrame {
     private void initComponents() {
 
         jLabel2 = new javax.swing.JLabel();
-        jLabel6 = new javax.swing.JLabel();
+        lblPosition = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
         jSeparator3 = new javax.swing.JSeparator();
         cmbPersonType = new javax.swing.JComboBox<>();
@@ -39,7 +53,7 @@ public class UpdatePersonForm extends javax.swing.JFrame {
         jSeparator1 = new javax.swing.JSeparator();
         jSeparator2 = new javax.swing.JSeparator();
         cmbTeam = new javax.swing.JComboBox<>();
-        jLabel5 = new javax.swing.JLabel();
+        lblTeam = new javax.swing.JLabel();
         jLabel1 = new javax.swing.JLabel();
         cmbPosition = new javax.swing.JComboBox<>();
         buttonDelete = new javax.swing.JButton();
@@ -49,7 +63,7 @@ public class UpdatePersonForm extends javax.swing.JFrame {
 
         jLabel2.setText("Type:");
 
-        jLabel6.setText("Position:");
+        lblPosition.setText("Position:");
 
         jLabel3.setText("First Name:");
 
@@ -85,7 +99,7 @@ public class UpdatePersonForm extends javax.swing.JFrame {
 
         cmbTeam.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { " " }));
 
-        jLabel5.setText("Team:");
+        lblTeam.setText("Team:");
 
         jLabel1.setFont(new java.awt.Font("Calibri", 1, 14)); // NOI18N
         jLabel1.setText("Update Person");
@@ -125,8 +139,8 @@ public class UpdatePersonForm extends javax.swing.JFrame {
                         .addComponent(jSeparator2, javax.swing.GroupLayout.PREFERRED_SIZE, 13, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(jLabel6)
-                            .addComponent(jLabel5))
+                            .addComponent(lblPosition)
+                            .addComponent(lblTeam))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(cmbPosition, 0, 153, Short.MAX_VALUE)
@@ -162,12 +176,12 @@ public class UpdatePersonForm extends javax.swing.JFrame {
                             .addComponent(jLabel4)))
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jLabel5)
+                            .addComponent(lblTeam)
                             .addComponent(cmbTeam, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGap(18, 18, 18)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(cmbPosition, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLabel6)))
+                            .addComponent(lblPosition)))
                     .addComponent(jSeparator2, javax.swing.GroupLayout.PREFERRED_SIZE, 102, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jSeparator3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -183,7 +197,7 @@ public class UpdatePersonForm extends javax.swing.JFrame {
 
     private void cmbPersonTypeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cmbPersonTypeActionPerformed
         // TODO add your handling code here:
-
+        displayElements();
     }//GEN-LAST:event_cmbPersonTypeActionPerformed
 
     private void txtFirstNameActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtFirstNameActionPerformed
@@ -236,6 +250,61 @@ public class UpdatePersonForm extends javax.swing.JFrame {
             }
         });
     }
+    
+    private void loadDetails(String type, int id){
+      
+        
+        switch(type){
+        case "Coach":   Coach c = new Coach("jflDB");
+                        Object[] coachRecord = c.loadDetails(id);
+                        c.closeConnection();
+                        
+                        cmbPersonType.setSelectedIndex(0);
+                        txtFirstName.setText(coachRecord[1].toString());
+                        txtSurname.setText(coachRecord[2].toString());
+                        cmbTeam.setSelectedIndex(Integer.parseInt(coachRecord[3].toString()));        
+                        break;
+        case "Manager":
+                        break;
+        case "Player":
+                        break;
+        case "Referee":
+                        break; 
+        }
+        
+    }
+    
+    private void displayElements() {
+        int selectedIndex;
+        selectedIndex = cmbPersonType.getSelectedIndex();
+        if ((selectedIndex == -1) || (selectedIndex == 3)) {
+            cmbTeam.setVisible(false);
+            lblTeam.setVisible(false);
+            cmbPosition.setVisible(false);
+            lblPosition.setVisible(false);
+        } else if ((selectedIndex == 0) || (selectedIndex == 1) || (selectedIndex == 2)) {
+            cmbTeam.setVisible(true);
+            lblTeam.setVisible(true);
+            cmbPosition.setVisible(false);
+            lblPosition.setVisible(false);
+            if (selectedIndex == 2) {
+                cmbPosition.setVisible(true);
+                lblPosition.setVisible(true);
+            }
+        }
+    }
+    
+    private void cmbTeamPopulate(){
+        Team t = new Team("jflDB");
+        String[] teams = t.populateTeamComboBox();
+        
+       for( int i=0; i<teams.length ; i++){
+           cmbTeam.addItem(teams[i]);
+        }
+       
+        t.closeConnection();
+        
+    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton buttonDelete;
@@ -247,11 +316,11 @@ public class UpdatePersonForm extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
-    private javax.swing.JLabel jLabel5;
-    private javax.swing.JLabel jLabel6;
     private javax.swing.JSeparator jSeparator1;
     private javax.swing.JSeparator jSeparator2;
     private javax.swing.JSeparator jSeparator3;
+    private javax.swing.JLabel lblPosition;
+    private javax.swing.JLabel lblTeam;
     private javax.swing.JTextField txtFirstName;
     private javax.swing.JTextField txtSurname;
     // End of variables declaration//GEN-END:variables

@@ -102,6 +102,7 @@ public class Coach extends DBConnection {
 
     }
     
+    
     public Object[][] loadAllCoaches(){
             int recordCount;
         try {
@@ -141,6 +142,28 @@ public class Coach extends DBConnection {
         }
         return coachRecords;
     }
-
+    
+    public Object[] loadDetails(int id){
+        Object[] coachRecord = new Object[4];
+        try {
+            final String allQuery = "SELECT * FROM jfl.coaches WHERE CoachID="+id;
+            this.setQuery(allQuery);
+            this.runQuery();
+            ResultSet output = this.getResultSet();
+            output.next();
+            
+            coachRecord[0] = output.getString("CoachID");
+            coachRecord[1] = output.getString("FirstName");
+            coachRecord[2] = output.getString("LastName");
+            coachRecord[3] = output.getString("TeamID");
+ 
+         } catch (SQLException sqle) {
+            System.out.println("Exception when loading coach details:" + sqle.toString());
+        }    
+            
+        
+            
+       return coachRecord;
+    }
     
 }

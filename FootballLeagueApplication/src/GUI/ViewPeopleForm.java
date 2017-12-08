@@ -9,7 +9,10 @@ import Classes.Coach;
 import Classes.Manager;
 import Classes.Player;
 import Classes.Referee;
-import javax.swing.table.DefaultTableModel;
+import javax.swing.JOptionPane;
+
+import javax.swing.table.*;
+ 
 
 /**
  *
@@ -68,6 +71,11 @@ public class ViewPeopleForm extends javax.swing.JFrame {
                 return canEdit [columnIndex];
             }
         });
+        tablePeople.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                tablePeopleMouseClicked(evt);
+            }
+        });
         jScrollPane1.setViewportView(tablePeople);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -98,6 +106,24 @@ public class ViewPeopleForm extends javax.swing.JFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void tablePeopleMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tablePeopleMouseClicked
+        // TODO add your handling code here:
+        int selectedRow = tablePeople.getSelectedRow();
+        int selectedID;
+        String selectedType;
+        
+        DefaultTableModel model =(DefaultTableModel) tablePeople.getModel();
+        
+        selectedType = model.getValueAt(selectedRow,0).toString();
+        selectedID = Integer.parseInt(model.getValueAt(selectedRow,1).toString());
+        
+        new UpdatePersonForm(selectedType,selectedID).setVisible(true);
+        
+        
+        
+     
+    }//GEN-LAST:event_tablePeopleMouseClicked
 
     /**
      * @param args the command line arguments
@@ -136,7 +162,7 @@ public class ViewPeopleForm extends javax.swing.JFrame {
     
     private void loadPeopleTable(){
         DefaultTableModel model =(DefaultTableModel) tablePeople.getModel();
-       
+      
         model.setRowCount(0);
        
         String type;
@@ -202,6 +228,7 @@ public class ViewPeopleForm extends javax.swing.JFrame {
         
         
         }
+    
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel jLabel1;
