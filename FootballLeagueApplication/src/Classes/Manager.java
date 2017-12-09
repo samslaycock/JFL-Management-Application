@@ -15,9 +15,8 @@ import java.sql.SQLException;
  * @author blao
  */
 public class Manager extends DBConnection {
-    
-     
-     /**
+
+    /**
      * Creates a new instance of the player class, and creates a connection to
      * the named database
      *
@@ -28,14 +27,14 @@ public class Manager extends DBConnection {
     }
 
     /**
-     * Insert a new Manager record into the database
-     * ManagerID of player
+     * Insert a new Manager record into the database ManagerID of player
+     *
      * @param firstname first name of manager
      * @param lastname last name of manager
      * @param teamid id of team manager belongs to
-     * 
+     *
      */
-    public void insertRecord (final String firstname, final String lastname, final int teamid) {
+    public void insertRecord(final String firstname, final String lastname, final int teamid) {
         final String insertStmt = "INSERT INTO jfl.managers (ManagerID, FirstName, LastName, TeamID) VALUES (?,?,?,?)";
         try {
             int recordCount;
@@ -46,13 +45,11 @@ public class Manager extends DBConnection {
                 ResultSet output = this.getResultSet();
                 output.next();
                 recordCount = output.getInt("recordCount");
-                }
-            catch(SQLException sqle) {
+            } catch (SQLException sqle) {
                 recordCount = 0;
             }
             recordCount++;
-            
-            
+
             PreparedStatement pstmt = getConnection().prepareStatement(insertStmt);
 
             pstmt.setInt(1, recordCount);
@@ -60,17 +57,16 @@ public class Manager extends DBConnection {
             pstmt.setString(3, lastname);
             pstmt.setInt(4, teamid);
 
-           
             pstmt.executeUpdate();
         } catch (SQLException sqle) {
             System.out.println("Exception when inserting manager record:" + sqle.toString());
         }
     }
-    
-    public Object[][] loadTeamManagers(int teamid){
+
+    public Object[][] loadTeamManagers(int teamid) {
         int recordCount;
         try {
-            final String countQuery = "SELECT COUNT(ManagerID) AS managerCount FROM jfl.managers WHERE TeamID="+teamid;
+            final String countQuery = "SELECT COUNT(ManagerID) AS managerCount FROM jfl.managers WHERE TeamID=" + teamid;
             this.setQuery(countQuery);
             this.runQuery();
             ResultSet output = this.getResultSet();
@@ -80,11 +76,11 @@ public class Manager extends DBConnection {
             recordCount = 0;
             System.out.println("Exception when getting Manager count:" + sqle.toString());
         }
-        
+
         Object[][] playerRecords = new Object[recordCount][5];
         int arrayCount = 0;
         try {
-            final String allQuery = "SELECT * FROM jfl.managers WHERE TeamID="+teamid;
+            final String allQuery = "SELECT * FROM jfl.managers WHERE TeamID=" + teamid;
             this.setQuery(allQuery);
             this.runQuery();
             ResultSet output = this.getResultSet();
@@ -101,9 +97,9 @@ public class Manager extends DBConnection {
         }
         return playerRecords;
     }
-    
-    public Object[][] loadAllManagers(){
-            int recordCount;
+
+    public Object[][] loadAllManagers() {
+        int recordCount;
         try {
             final String countQuery = "SELECT COUNT(ManagerID) AS managerCount FROM jfl.managers";
             this.setQuery(countQuery);
@@ -115,7 +111,7 @@ public class Manager extends DBConnection {
             recordCount = 0;
             System.out.println("Exception when getting Manager count:" + sqle.toString());
         }
-        
+
         Object[][] managerRecords = new Object[recordCount][6];
         int arrayCount = 0;
         try {
@@ -141,6 +137,26 @@ public class Manager extends DBConnection {
         }
         return managerRecords;
     }
-    
-    
+
+    public Object[] loadDetails(int id) {
+        Object[] managerRecord = new Object[4];
+        try {
+            final String allQuery = "SELECT * FROM jfl.managers WHERE ManagerID=" + id;
+            this.setQuery(allQuery);
+            this.runQuery();
+            ResultSet output = this.getResultSet();
+            output.next();
+
+            managerRecord[0] = output.getString("ManagerID");
+            managerRecord[1] = output.getString("FirstName");
+            managerRecord[2] = output.getString("LastName");
+            managerRecord[3] = output.getString("TeamID");
+
+        } catch (SQLException sqle) {
+            System.out.println("Exception when loading manager details:" + sqle.toString());
+        }
+        return managerRecord;
+
+    }
+
 }

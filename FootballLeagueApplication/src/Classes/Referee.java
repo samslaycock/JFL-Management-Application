@@ -15,9 +15,8 @@ import java.sql.SQLException;
  * @author blao
  */
 public class Referee extends DBConnection {
-    
-     
-     /**
+
+    /**
      * Creates a new instance of the player class, and creates a connection to
      * the named database
      *
@@ -28,14 +27,15 @@ public class Referee extends DBConnection {
     }
 
     /**
-     * Insert a new Referee record into the database
-     * refereeID        record id of referee
+     * Insert a new Referee record into the database refereeID record id of
+     * referee
+     *
      * @param firstname first name of referee
      * @param lastname last name of referee
-     * 
-     * 
+     *
+     *
      */
-    public void insertRecord (final String firstname, final String lastname) {
+    public void insertRecord(final String firstname, final String lastname) {
         final String insertStmt = "INSERT INTO jfl.referees (RefereeID, FirstName, LastName) VALUES (?,?,?)";
         try {
             int recordCount;
@@ -46,29 +46,25 @@ public class Referee extends DBConnection {
                 ResultSet output = this.getResultSet();
                 output.next();
                 recordCount = output.getInt("recordCount");
-                }
-            catch(SQLException sqle) {
+            } catch (SQLException sqle) {
                 recordCount = 0;
             }
             recordCount++;
-            
-            
+
             PreparedStatement pstmt = getConnection().prepareStatement(insertStmt);
 
             pstmt.setInt(1, recordCount);
             pstmt.setString(2, firstname);
             pstmt.setString(3, lastname);
-            
 
-           
             pstmt.executeUpdate();
         } catch (SQLException sqle) {
             System.out.println("Exception when inserting referee record:" + sqle.toString());
         }
     }
 
-    public Object[][] loadAllReferees(){
-            int recordCount;
+    public Object[][] loadAllReferees() {
+        int recordCount;
         try {
             final String countQuery = "SELECT COUNT(RefereeID) AS refereeCount FROM jfl.referees";
             this.setQuery(countQuery);
@@ -80,14 +76,14 @@ public class Referee extends DBConnection {
             recordCount = 0;
             System.out.println("Exception when getting Referee count:" + sqle.toString());
         }
-        
+
         Object[][] refereeRecords = new Object[recordCount][6];
         int arrayCount = 0;
         try {
             final String allQuery = "SELECT * FROM jfl.referees";
             this.setQuery(allQuery);
             this.runQuery();
-            
+
             ResultSet output = this.getResultSet();
             while ((output.next()) && (arrayCount < recordCount)) {
                 refereeRecords[arrayCount][0] = "Referee";
@@ -103,6 +99,24 @@ public class Referee extends DBConnection {
         }
         return refereeRecords;
     }
-    
-    
+
+    public Object[] loadDetails(int id) {
+        Object[] refereeRecord = new Object[3];
+        try {
+            final String allQuery = "SELECT * FROM jfl.referees WHERE RefereeID=" + id;
+            this.setQuery(allQuery);
+            this.runQuery();
+            ResultSet output = this.getResultSet();
+            output.next();
+
+            refereeRecord[0] = output.getString("RefereeID");
+            refereeRecord[1] = output.getString("FirstName");
+            refereeRecord[2] = output.getString("LastName");
+
+        } catch (SQLException sqle) {
+            System.out.println("Exception when loading referee details:" + sqle.toString());
+        }
+        return refereeRecord;
+    }
+
 }

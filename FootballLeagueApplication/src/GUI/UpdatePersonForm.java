@@ -6,6 +6,9 @@
 package GUI;
 
 import Classes.Coach;
+import Classes.Manager;
+import Classes.Player;
+import Classes.Referee;
 import Classes.Team;
 
 /**
@@ -13,7 +16,7 @@ import Classes.Team;
  * @author blao
  */
 public class UpdatePersonForm extends javax.swing.JFrame {
-
+    int personID;
     /**
      * Creates new form UpdatePersonForm
      *  @param type type of person being updated (player, coach, manager, referee)
@@ -23,7 +26,8 @@ public class UpdatePersonForm extends javax.swing.JFrame {
         initComponents();
         displayElements();
         cmbTeamPopulate();
-        loadDetails(type, id);
+        personID = id;
+        loadDetails(type, personID);
         
     }
     
@@ -211,6 +215,44 @@ public class UpdatePersonForm extends javax.swing.JFrame {
 
     private void buttonUpdateActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonUpdateActionPerformed
         // TODO add your handling code here:
+        int selectedType;
+        String firstName;
+        String lastName;
+        int teamID;
+        String position;
+        
+      
+        
+        selectedType = cmbPersonType.getSelectedIndex();
+        firstName = txtFirstName.getText();
+        lastName = txtSurname.getText();
+        teamID = cmbTeam.getSelectedIndex();
+        position = String.valueOf(cmbPosition.getSelectedItem());
+        
+        switch (selectedType){
+            case 0: //Coach c = new Coach("jflDB");
+                    //c.insertRecord(firstName, lastName, teamID);
+                    //c.closeConnection();
+                    //this.recordAdded();
+                break;
+            case 1: //Manager m = new Manager("jflDB");
+                    //m.insertRecord(firstName, lastName, teamID);
+                    //m.closeConnection();
+                    // this.recordAdded();
+                    break;
+            case 2: Player p = new Player("jflDB");
+                    p.updateRecord(personID, firstName, lastName, teamID, position);
+                    p.closeConnection();
+                    //this.recordAdded();
+                    break; 
+            case 3: //Referee r = new Referee("jflDB");
+                    //r.insertRecord(firstName, lastName);
+                    //r.closeConnection();
+                    // this.recordAdded(); 
+                    break; 
+        }  
+        
+      
     }//GEN-LAST:event_buttonUpdateActionPerformed
 
     private void buttonDeleteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonDeleteActionPerformed
@@ -265,11 +307,33 @@ public class UpdatePersonForm extends javax.swing.JFrame {
                         txtSurname.setText(coachRecord[2].toString());
                         cmbTeam.setSelectedIndex(Integer.parseInt(coachRecord[3].toString()));        
                         break;
-        case "Manager":
+        case "Manager": Manager m = new Manager("jflDB");
+                        Object[] managerRecord = m.loadDetails(id);
+                        m.closeConnection();
+                        
+                        cmbPersonType.setSelectedIndex(1);
+                        txtFirstName.setText(managerRecord[1].toString());
+                        txtSurname.setText(managerRecord[2].toString());
+                        cmbTeam.setSelectedIndex(Integer.parseInt(managerRecord[3].toString())); 
                         break;
-        case "Player":
+        case "Player":  Player p = new Player("jflDB");
+                        Object[] playerRecord = p.loadDetails(id);
+                        p.closeConnection();
+                        
+                        cmbPersonType.setSelectedIndex(2);
+                        txtFirstName.setText(playerRecord[1].toString());
+                        txtSurname.setText(playerRecord[2].toString());
+                        cmbTeam.setSelectedIndex(Integer.parseInt(playerRecord[3].toString()));
+                        cmbPosition.setSelectedItem(playerRecord[4]);
                         break;
-        case "Referee":
+        case "Referee": Referee r = new Referee("jflDB");
+                        Object[] refereeRecord = r.loadDetails(id);
+                        r.closeConnection();
+                        
+                        cmbPersonType.setSelectedIndex(3);
+                        txtFirstName.setText(refereeRecord[1].toString());
+                        txtSurname.setText(refereeRecord[2].toString());
+                        
                         break; 
         }
         
