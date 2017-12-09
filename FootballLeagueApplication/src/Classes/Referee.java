@@ -38,22 +38,22 @@ public class Referee extends DBConnection {
     public void insertRecord(final String firstname, final String lastname) {
         final String insertStmt = "INSERT INTO jfl.referees (RefereeID, FirstName, LastName) VALUES (?,?,?)";
         try {
-            int recordCount;
+            int maxCount;
             try {
-                final String countQuery = "SELECT COUNT(RefereeID) AS recordCount FROM jfl.referees";
+                final String countQuery = "SELECT MAX(RefereeID) AS maxCount FROM jfl.referees";
                 this.setQuery(countQuery);
                 this.runQuery();
                 ResultSet output = this.getResultSet();
                 output.next();
-                recordCount = output.getInt("recordCount");
+                maxCount = output.getInt("recordCount");
             } catch (SQLException sqle) {
-                recordCount = 0;
+                maxCount = 0;
             }
-            recordCount++;
+            maxCount++;
 
             PreparedStatement pstmt = getConnection().prepareStatement(insertStmt);
 
-            pstmt.setInt(1, recordCount);
+            pstmt.setInt(1, maxCount);
             pstmt.setString(2, firstname);
             pstmt.setString(3, lastname);
 
