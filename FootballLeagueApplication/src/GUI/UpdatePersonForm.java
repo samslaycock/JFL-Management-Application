@@ -230,25 +230,25 @@ public class UpdatePersonForm extends javax.swing.JFrame {
         position = String.valueOf(cmbPosition.getSelectedItem());
         
         switch (selectedType){
-            case 0: //Coach c = new Coach("jflDB");
-                    //c.insertRecord(firstName, lastName, teamID);
-                    //c.closeConnection();
-                    //this.recordAdded();
+            case 0: Coach c = new Coach("jflDB");
+                    c.updateRecord(personID, firstName, lastName, teamID);
+                    c.closeConnection();
+                    
                 break;
-            case 1: //Manager m = new Manager("jflDB");
-                    //m.insertRecord(firstName, lastName, teamID);
-                    //m.closeConnection();
-                    // this.recordAdded();
+            case 1: Manager m = new Manager("jflDB");
+                    m.updateRecord(personID, firstName, lastName, teamID);
+                    m.closeConnection();
+                    
                     break;
             case 2: Player p = new Player("jflDB");
                     p.updateRecord(personID, firstName, lastName, teamID, position);
                     p.closeConnection();
-                    //this.recordAdded();
+                    
                     break; 
-            case 3: //Referee r = new Referee("jflDB");
-                    //r.insertRecord(firstName, lastName);
-                    //r.closeConnection();
-                    // this.recordAdded(); 
+            case 3: Referee r = new Referee("jflDB");
+                    r.updateRecord(personID, firstName, lastName);
+                    r.closeConnection();
+                    
                     break; 
         }  
         

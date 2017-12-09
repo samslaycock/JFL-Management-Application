@@ -62,6 +62,16 @@ public class Referee extends DBConnection {
             System.out.println("Exception when inserting referee record:" + sqle.toString());
         }
     }
+    
+    public void updateRecord (int id, final String firstname, final String lastname){
+        final String updateStmt = "UPDATE jfl.referees SET FirstName='"+firstname+"', LastName='"+lastname+"' WHERE RefereeID="+id;
+        try {
+        PreparedStatement pstmt = getConnection().prepareStatement(updateStmt);
+        pstmt.executeUpdate();
+        } catch (SQLException sqle) {
+            System.out.println("Exception when updating referee record:" + sqle.toString());
+        }
+    }
 
     public Object[][] loadAllReferees() {
         int recordCount;

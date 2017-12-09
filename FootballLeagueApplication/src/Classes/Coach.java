@@ -66,6 +66,16 @@ public class Coach extends DBConnection {
         }
     }
     
+    public void updateRecord (int id, final String firstname, final String lastname, final int teamid){
+        final String updateStmt = "UPDATE jfl.coaches SET FirstName='"+firstname+"', LastName='"+lastname+"', TeamID="+teamid+" WHERE CoachID="+id;
+        try {
+        PreparedStatement pstmt = getConnection().prepareStatement(updateStmt);
+        pstmt.executeUpdate();
+        } catch (SQLException sqle) {
+            System.out.println("Exception when updating coach record:" + sqle.toString());
+        }
+    }
+    
     public Object[][] loadTeamCoaches(int teamid){
         int recordCount;
         try {

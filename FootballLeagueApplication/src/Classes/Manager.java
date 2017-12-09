@@ -62,6 +62,16 @@ public class Manager extends DBConnection {
             System.out.println("Exception when inserting manager record:" + sqle.toString());
         }
     }
+    
+    public void updateRecord (int id, final String firstname, final String lastname, final int teamid){
+        final String updateStmt = "UPDATE jfl.managers SET FirstName='"+firstname+"', LastName='"+lastname+"', TeamID="+teamid+" WHERE ManagerID="+id;
+        try {
+        PreparedStatement pstmt = getConnection().prepareStatement(updateStmt);
+        pstmt.executeUpdate();
+        } catch (SQLException sqle) {
+            System.out.println("Exception when updating manager record:" + sqle.toString());
+        }
+    }
 
     public Object[][] loadTeamManagers(int teamid) {
         int recordCount;
