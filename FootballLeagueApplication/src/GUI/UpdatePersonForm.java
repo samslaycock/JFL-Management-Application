@@ -10,17 +10,22 @@ import Classes.Manager;
 import Classes.Player;
 import Classes.Referee;
 import Classes.Team;
+import javax.swing.JOptionPane;
 
 /**
  *
  * @author blao
  */
 public class UpdatePersonForm extends javax.swing.JFrame {
+
     int personID;
+
     /**
      * Creates new form UpdatePersonForm
-     *  @param type type of person being updated (player, coach, manager, referee)
-     *  @param id id number of person being updated
+     *
+     * @param type type of person being updated (player, coach, manager,
+     * referee)
+     * @param id id number of person being updated
      */
     public UpdatePersonForm(String type, int id) {
         initComponents();
@@ -28,13 +33,12 @@ public class UpdatePersonForm extends javax.swing.JFrame {
         cmbTeamPopulate();
         personID = id;
         loadDetails(type, personID);
-        
+
     }
-    
-    public UpdatePersonForm(){
+
+    public UpdatePersonForm() {
         initComponents();
     }
-    
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -220,43 +224,86 @@ public class UpdatePersonForm extends javax.swing.JFrame {
         String lastName;
         int teamID;
         String position;
-        
-      
-        
+
         selectedType = cmbPersonType.getSelectedIndex();
         firstName = txtFirstName.getText();
         lastName = txtSurname.getText();
         teamID = cmbTeam.getSelectedIndex();
         position = String.valueOf(cmbPosition.getSelectedItem());
         
-        switch (selectedType){
-            case 0: Coach c = new Coach("jflDB");
-                    c.updateRecord(personID, firstName, lastName, teamID);
-                    c.closeConnection();
-                    
-                break;
-            case 1: Manager m = new Manager("jflDB");
-                    m.updateRecord(personID, firstName, lastName, teamID);
-                    m.closeConnection();
-                    
-                    break;
-            case 2: Player p = new Player("jflDB");
-                    p.updateRecord(personID, firstName, lastName, teamID, position);
-                    p.closeConnection();
-                    
-                    break; 
-            case 3: Referee r = new Referee("jflDB");
-                    r.updateRecord(personID, firstName, lastName);
-                    r.closeConnection();
-                    
-                    break; 
-        }  
-        
       
+
+        switch (selectedType) {
+            case 0:
+                Coach c = new Coach("jflDB");
+                c.updateRecord(personID, firstName, lastName, teamID);
+                c.closeConnection();
+
+                break;
+            case 1:
+                Manager m = new Manager("jflDB");
+                m.updateRecord(personID, firstName, lastName, teamID);
+                m.closeConnection();
+
+                break;
+            case 2:
+                Player p = new Player("jflDB");
+                p.updateRecord(personID, firstName, lastName, teamID, position);
+                p.closeConnection();
+
+                break;
+            case 3:
+                Referee r = new Referee("jflDB");
+                r.updateRecord(personID, firstName, lastName);
+                r.closeConnection();
+
+                break;
+        }
+        
+        JOptionPane.showMessageDialog(this, "Record Updated!");
+
+
     }//GEN-LAST:event_buttonUpdateActionPerformed
 
     private void buttonDeleteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonDeleteActionPerformed
         // TODO add your handling code here:
+        int selectedType;
+        selectedType = cmbPersonType.getSelectedIndex();
+
+        int confirmDelete = JOptionPane.showConfirmDialog(this, "Do you want to delete this record?", "Delete Record", JOptionPane.YES_NO_OPTION);
+        if (confirmDelete == 0) {
+            System.out.println("Confirmed");
+            switch (selectedType) {
+                case 0:
+                    Coach c = new Coach("jflDB");
+                    c.deleteRecord(personID);
+                    c.closeConnection();
+
+                    break;
+                case 1:
+                    Manager m = new Manager("jflDB");
+                    m.deleteRecord(personID);
+                    m.closeConnection();
+
+                    break;
+                case 2:
+                    Player p = new Player("jflDB");
+                    p.deleteRecord(personID);
+                    p.closeConnection();
+
+                    break;
+                case 3:
+                    Referee r = new Referee("jflDB");
+                    r.deleteRecord(personID);
+                    r.closeConnection();
+
+                    break;
+            }
+        } else {
+            System.out.println("Not Confirmed");
+        }
+
+
     }//GEN-LAST:event_buttonDeleteActionPerformed
 
     /**
@@ -293,52 +340,55 @@ public class UpdatePersonForm extends javax.swing.JFrame {
             }
         });
     }
-    
-    private void loadDetails(String type, int id){
-      
-        
-        switch(type){
-        case "Coach":   Coach c = new Coach("jflDB");
-                        Object[] coachRecord = c.loadDetails(id);
-                        c.closeConnection();
-                        
-                        cmbPersonType.setSelectedIndex(0);
-                        txtFirstName.setText(coachRecord[1].toString());
-                        txtSurname.setText(coachRecord[2].toString());
-                        cmbTeam.setSelectedIndex(Integer.parseInt(coachRecord[3].toString()));        
-                        break;
-        case "Manager": Manager m = new Manager("jflDB");
-                        Object[] managerRecord = m.loadDetails(id);
-                        m.closeConnection();
-                        
-                        cmbPersonType.setSelectedIndex(1);
-                        txtFirstName.setText(managerRecord[1].toString());
-                        txtSurname.setText(managerRecord[2].toString());
-                        cmbTeam.setSelectedIndex(Integer.parseInt(managerRecord[3].toString())); 
-                        break;
-        case "Player":  Player p = new Player("jflDB");
-                        Object[] playerRecord = p.loadDetails(id);
-                        p.closeConnection();
-                        
-                        cmbPersonType.setSelectedIndex(2);
-                        txtFirstName.setText(playerRecord[1].toString());
-                        txtSurname.setText(playerRecord[2].toString());
-                        cmbTeam.setSelectedIndex(Integer.parseInt(playerRecord[3].toString()));
-                        cmbPosition.setSelectedItem(playerRecord[4]);
-                        break;
-        case "Referee": Referee r = new Referee("jflDB");
-                        Object[] refereeRecord = r.loadDetails(id);
-                        r.closeConnection();
-                        
-                        cmbPersonType.setSelectedIndex(3);
-                        txtFirstName.setText(refereeRecord[1].toString());
-                        txtSurname.setText(refereeRecord[2].toString());
-                        
-                        break; 
+
+    private void loadDetails(String type, int id) {
+
+        switch (type) {
+            case "Coach":
+                Coach c = new Coach("jflDB");
+                Object[] coachRecord = c.loadDetails(id);
+                c.closeConnection();
+
+                cmbPersonType.setSelectedIndex(0);
+                txtFirstName.setText(coachRecord[1].toString());
+                txtSurname.setText(coachRecord[2].toString());
+                cmbTeam.setSelectedIndex(Integer.parseInt(coachRecord[3].toString()));
+                break;
+            case "Manager":
+                Manager m = new Manager("jflDB");
+                Object[] managerRecord = m.loadDetails(id);
+                m.closeConnection();
+
+                cmbPersonType.setSelectedIndex(1);
+                txtFirstName.setText(managerRecord[1].toString());
+                txtSurname.setText(managerRecord[2].toString());
+                cmbTeam.setSelectedIndex(Integer.parseInt(managerRecord[3].toString()));
+                break;
+            case "Player":
+                Player p = new Player("jflDB");
+                Object[] playerRecord = p.loadDetails(id);
+                p.closeConnection();
+
+                cmbPersonType.setSelectedIndex(2);
+                txtFirstName.setText(playerRecord[1].toString());
+                txtSurname.setText(playerRecord[2].toString());
+                cmbTeam.setSelectedIndex(Integer.parseInt(playerRecord[3].toString()));
+                cmbPosition.setSelectedItem(playerRecord[4]);
+                break;
+            case "Referee":
+                Referee r = new Referee("jflDB");
+                Object[] refereeRecord = r.loadDetails(id);
+                r.closeConnection();
+
+                cmbPersonType.setSelectedIndex(3);
+                txtFirstName.setText(refereeRecord[1].toString());
+                txtSurname.setText(refereeRecord[2].toString());
+
+                break;
         }
-        
+
     }
-    
+
     private void displayElements() {
         int selectedIndex;
         selectedIndex = cmbPersonType.getSelectedIndex();
@@ -358,17 +408,17 @@ public class UpdatePersonForm extends javax.swing.JFrame {
             }
         }
     }
-    
-    private void cmbTeamPopulate(){
+
+    private void cmbTeamPopulate() {
         Team t = new Team("jflDB");
         String[] teams = t.populateTeamComboBox();
-        
-       for( int i=0; i<teams.length ; i++){
-           cmbTeam.addItem(teams[i]);
+
+        for (int i = 0; i < teams.length; i++) {
+            cmbTeam.addItem(teams[i]);
         }
-       
+
         t.closeConnection();
-        
+
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

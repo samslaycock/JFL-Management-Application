@@ -119,7 +119,7 @@ public class ViewPeopleForm extends javax.swing.JFrame {
         selectedID = Integer.parseInt(model.getValueAt(selectedRow,1).toString());
         
         new UpdatePersonForm(selectedType,selectedID).setVisible(true);
-        
+        this.dispose();
         
         
      

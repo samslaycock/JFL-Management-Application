@@ -24,7 +24,7 @@
   <Layout>
     <DimensionLayout dim="0">
       <Group type="103" groupAlignment="0" attributes="0">
-          <Group type="102" alignment="0" attributes="0">
+          <Group type="102" attributes="0">
               <EmptySpace max="-2" attributes="0"/>
               <Group type="103" groupAlignment="0" attributes="0">
                   <Component id="jSeparator1" alignment="0" max="32767" attributes="0"/>
@@ -32,17 +32,17 @@
                       <Component id="jLabel1" min="-2" max="-2" attributes="0"/>
                       <EmptySpace min="0" pref="291" max="32767" attributes="0"/>
                   </Group>
+                  <Group type="102" attributes="0">
+                      <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
+                      <Group type="103" groupAlignment="1" attributes="0">
+                          <Component id="buttonAddTeam" alignment="1" min="-2" pref="157" max="-2" attributes="0"/>
+                          <Component id="buttonUpdateTeams" min="-2" pref="157" max="-2" attributes="0"/>
+                          <Component id="buttonViewTeamMembers" alignment="1" min="-2" pref="157" max="-2" attributes="0"/>
+                      </Group>
+                      <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
+                  </Group>
               </Group>
               <EmptySpace max="-2" attributes="0"/>
-          </Group>
-          <Group type="102" alignment="0" attributes="0">
-              <EmptySpace min="-2" pref="130" max="-2" attributes="0"/>
-              <Group type="103" groupAlignment="1" attributes="0">
-                  <Component id="buttonViewTeam" alignment="1" min="-2" pref="140" max="-2" attributes="0"/>
-                  <Component id="buttonUpdateTeam" alignment="1" min="-2" pref="140" max="-2" attributes="0"/>
-                  <Component id="buttonAddTeam" alignment="1" min="-2" pref="140" max="-2" attributes="0"/>
-              </Group>
-              <EmptySpace max="32767" attributes="0"/>
           </Group>
       </Group>
     </DimensionLayout>
@@ -56,9 +56,9 @@
               <EmptySpace type="separate" max="-2" attributes="0"/>
               <Component id="buttonAddTeam" min="-2" max="-2" attributes="0"/>
               <EmptySpace type="separate" max="-2" attributes="0"/>
-              <Component id="buttonUpdateTeam" min="-2" max="-2" attributes="0"/>
+              <Component id="buttonUpdateTeams" min="-2" max="-2" attributes="0"/>
               <EmptySpace type="separate" max="-2" attributes="0"/>
-              <Component id="buttonViewTeam" min="-2" max="-2" attributes="0"/>
+              <Component id="buttonViewTeamMembers" min="-2" max="-2" attributes="0"/>
               <EmptySpace max="32767" attributes="0"/>
           </Group>
       </Group>
@@ -75,12 +75,12 @@
     </Component>
     <Component class="javax.swing.JSeparator" name="jSeparator1">
     </Component>
-    <Component class="javax.swing.JButton" name="buttonViewTeam">
+    <Component class="javax.swing.JButton" name="buttonViewTeamMembers">
       <Properties>
-        <Property name="text" type="java.lang.String" value="View Team"/>
+        <Property name="text" type="java.lang.String" value="View Team Members"/>
       </Properties>
       <Events>
-        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="buttonViewTeamActionPerformed"/>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="buttonViewTeamMembersActionPerformed"/>
       </Events>
     </Component>
     <Component class="javax.swing.JButton" name="buttonAddTeam">
@@ -91,12 +91,13 @@
         <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="buttonAddTeamActionPerformed"/>
       </Events>
     </Component>
-    <Component class="javax.swing.JButton" name="buttonUpdateTeam">
+    <Component class="javax.swing.JButton" name="buttonUpdateTeams">
       <Properties>
-        <Property name="text" type="java.lang.String" value="Update Team"/>
+        <Property name="text" type="java.lang.String" value="Update Teams"/>
+        <Property name="toolTipText" type="java.lang.String" value=""/>
       </Properties>
       <Events>
-        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="buttonUpdateTeamActionPerformed"/>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="buttonUpdateTeamsActionPerformed"/>
       </Events>
     </Component>
   </SubComponents>

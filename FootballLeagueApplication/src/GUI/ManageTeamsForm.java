@@ -29,9 +29,9 @@ public class ManageTeamsForm extends javax.swing.JFrame {
 
         jLabel1 = new javax.swing.JLabel();
         jSeparator1 = new javax.swing.JSeparator();
-        buttonViewTeam = new javax.swing.JButton();
+        buttonViewTeamMembers = new javax.swing.JButton();
         buttonAddTeam = new javax.swing.JButton();
-        buttonUpdateTeam = new javax.swing.JButton();
+        buttonUpdateTeams = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Manage Teams");
@@ -39,10 +39,10 @@ public class ManageTeamsForm extends javax.swing.JFrame {
         jLabel1.setFont(new java.awt.Font("Calibri", 1, 14)); // NOI18N
         jLabel1.setText("Manage Teams");
 
-        buttonViewTeam.setText("View Team");
-        buttonViewTeam.addActionListener(new java.awt.event.ActionListener() {
+        buttonViewTeamMembers.setText("View Team Members");
+        buttonViewTeamMembers.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                buttonViewTeamActionPerformed(evt);
+                buttonViewTeamMembersActionPerformed(evt);
             }
         });
 
@@ -53,10 +53,11 @@ public class ManageTeamsForm extends javax.swing.JFrame {
             }
         });
 
-        buttonUpdateTeam.setText("Update Team");
-        buttonUpdateTeam.addActionListener(new java.awt.event.ActionListener() {
+        buttonUpdateTeams.setText("Update Teams");
+        buttonUpdateTeams.setToolTipText("");
+        buttonUpdateTeams.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                buttonUpdateTeamActionPerformed(evt);
+                buttonUpdateTeamsActionPerformed(evt);
             }
         });
 
@@ -70,15 +71,15 @@ public class ManageTeamsForm extends javax.swing.JFrame {
                     .addComponent(jSeparator1)
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(jLabel1)
-                        .addGap(0, 291, Short.MAX_VALUE)))
+                        .addGap(0, 291, Short.MAX_VALUE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(0, 0, Short.MAX_VALUE)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(buttonAddTeam, javax.swing.GroupLayout.PREFERRED_SIZE, 157, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(buttonUpdateTeams, javax.swing.GroupLayout.PREFERRED_SIZE, 157, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(buttonViewTeamMembers, javax.swing.GroupLayout.PREFERRED_SIZE, 157, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(0, 0, Short.MAX_VALUE)))
                 .addContainerGap())
-            .addGroup(layout.createSequentialGroup()
-                .addGap(130, 130, 130)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(buttonViewTeam, javax.swing.GroupLayout.PREFERRED_SIZE, 140, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(buttonUpdateTeam, javax.swing.GroupLayout.PREFERRED_SIZE, 140, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(buttonAddTeam, javax.swing.GroupLayout.PREFERRED_SIZE, 140, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -90,9 +91,9 @@ public class ManageTeamsForm extends javax.swing.JFrame {
                 .addGap(18, 18, 18)
                 .addComponent(buttonAddTeam)
                 .addGap(18, 18, 18)
-                .addComponent(buttonUpdateTeam)
+                .addComponent(buttonUpdateTeams)
                 .addGap(18, 18, 18)
-                .addComponent(buttonViewTeam)
+                .addComponent(buttonViewTeamMembers)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
@@ -105,17 +106,17 @@ public class ManageTeamsForm extends javax.swing.JFrame {
         atf.setVisible(true);
     }//GEN-LAST:event_buttonAddTeamActionPerformed
 
-    private void buttonUpdateTeamActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonUpdateTeamActionPerformed
+    private void buttonUpdateTeamsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonUpdateTeamsActionPerformed
         // TODO add your handling code here:
-        UpdateTeamForm utf = new UpdateTeamForm();
-        utf.setVisible(true);
-    }//GEN-LAST:event_buttonUpdateTeamActionPerformed
+        SelectTeamForm vtf = new SelectTeamForm();
+        vtf.setVisible(true);
+    }//GEN-LAST:event_buttonUpdateTeamsActionPerformed
 
-    private void buttonViewTeamActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonViewTeamActionPerformed
+    private void buttonViewTeamMembersActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonViewTeamMembersActionPerformed
         // TODO add your handling code here:
-        ViewTeamForm vtmf = new ViewTeamForm();
+        ViewTeamMembersForm vtmf = new ViewTeamMembersForm();
         vtmf.setVisible(true);
-    }//GEN-LAST:event_buttonViewTeamActionPerformed
+    }//GEN-LAST:event_buttonViewTeamMembersActionPerformed
 
     /**
      * @param args the command line arguments
@@ -154,8 +155,8 @@ public class ManageTeamsForm extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton buttonAddTeam;
-    private javax.swing.JButton buttonUpdateTeam;
-    private javax.swing.JButton buttonViewTeam;
+    private javax.swing.JButton buttonUpdateTeams;
+    private javax.swing.JButton buttonViewTeamMembers;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JSeparator jSeparator1;
     // End of variables declaration//GEN-END:variables

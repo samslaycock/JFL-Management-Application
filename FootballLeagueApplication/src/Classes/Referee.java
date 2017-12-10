@@ -72,6 +72,16 @@ public class Referee extends DBConnection {
             System.out.println("Exception when updating referee record:" + sqle.toString());
         }
     }
+    
+    public void deleteRecord (int id){
+        final String updateStmt = "DELETE FROM jfl.referees WHERE RefereeID="+id;
+        try {
+        PreparedStatement pstmt = getConnection().prepareStatement(updateStmt);
+        pstmt.executeUpdate();
+        } catch (SQLException sqle) {
+            System.out.println("Exception when deleting referee record:" + sqle.toString());
+        }
+    }
 
     public Object[][] loadAllReferees() {
         int recordCount;

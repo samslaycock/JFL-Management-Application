@@ -72,6 +72,16 @@ public class Manager extends DBConnection {
             System.out.println("Exception when updating manager record:" + sqle.toString());
         }
     }
+    
+    public void deleteRecord (int id){
+        final String updateStmt = "DELETE FROM jfl.managers WHERE ManagerID="+id;
+        try {
+        PreparedStatement pstmt = getConnection().prepareStatement(updateStmt);
+        pstmt.executeUpdate();
+        } catch (SQLException sqle) {
+            System.out.println("Exception when deleting manager record:" + sqle.toString());
+        }
+    }
 
     public Object[][] loadTeamManagers(int teamid) {
         int recordCount;

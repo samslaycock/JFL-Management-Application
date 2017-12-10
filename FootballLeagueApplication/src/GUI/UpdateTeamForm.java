@@ -6,18 +6,30 @@
 
 package GUI;
 
+import Classes.Player;
 import Classes.Team;
+import javax.swing.JOptionPane;
+import javax.swing.table.DefaultTableModel;
 
 /**
  *
  * @author blao
  */
 public class UpdateTeamForm extends javax.swing.JFrame {
+    
+    int teamID;
 
     /** Creates new form UpdateTeamForm */
-    public UpdateTeamForm() {
+    public UpdateTeamForm(int id) {
         initComponents();
-        cmbTeamPopulate();
+        teamID = id;
+        loadDetails(teamID);
+        loadTeamPlayers(teamID);
+    }
+    
+     public UpdateTeamForm() {
+        initComponents();
+        
     }
 
     /** This method is called from within the constructor to
@@ -30,23 +42,22 @@ public class UpdateTeamForm extends javax.swing.JFrame {
     private void initComponents() {
 
         jLabel2 = new javax.swing.JLabel();
-        jLabel3 = new javax.swing.JLabel();
         jLabel1 = new javax.swing.JLabel();
         jSeparator3 = new javax.swing.JSeparator();
         buttonDelete = new javax.swing.JButton();
         buttonUpdate = new javax.swing.JButton();
         jSeparator1 = new javax.swing.JSeparator();
         txtTeamName = new javax.swing.JTextField();
-        cmbTeamCaptain = new javax.swing.JComboBox<>();
-        cmbSelectTeam = new javax.swing.JComboBox<>();
-        jLabel4 = new javax.swing.JLabel();
+        jSeparator4 = new javax.swing.JSeparator();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        tablePlayers = new javax.swing.JTable();
+        jLabel5 = new javax.swing.JLabel();
+        txtCaptain = new javax.swing.JTextField();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Update Team");
 
         jLabel2.setText("Team Name:");
-
-        jLabel3.setText("Team Captain:");
 
         jLabel1.setFont(new java.awt.Font("Calibri", 1, 14)); // NOI18N
         jLabel1.setText("Update Team");
@@ -71,14 +82,37 @@ public class UpdateTeamForm extends javax.swing.JFrame {
             }
         });
 
-        cmbSelectTeam.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { " " }));
-        cmbSelectTeam.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                cmbSelectTeamActionPerformed(evt);
+        tablePlayers.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+
+            },
+            new String [] {
+                "Player ID", "First Name", "Last Name", "Position"
+            }
+        ) {
+            boolean[] canEdit = new boolean [] {
+                false, false, false, false
+            };
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
             }
         });
+        tablePlayers.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                tablePlayersMouseClicked(evt);
+            }
+        });
+        jScrollPane1.setViewportView(tablePlayers);
 
-        jLabel4.setText("Select Team:");
+        jLabel5.setText("Selected Captain:");
+
+        txtCaptain.setEditable(false);
+        txtCaptain.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txtCaptainActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -90,30 +124,26 @@ public class UpdateTeamForm extends javax.swing.JFrame {
                     .addComponent(jSeparator3)
                     .addComponent(jSeparator1)
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(0, 115, Short.MAX_VALUE)
+                        .addGap(0, 215, Short.MAX_VALUE)
                         .addComponent(buttonUpdate)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(buttonDelete)
-                        .addGap(0, 116, Short.MAX_VALUE))
+                        .addGap(0, 215, Short.MAX_VALUE))
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(jLabel2)
                             .addGroup(layout.createSequentialGroup()
-                                .addComponent(jLabel4)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(cmbSelectTeam, javax.swing.GroupLayout.PREFERRED_SIZE, 145, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGroup(layout.createSequentialGroup()
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                                    .addComponent(jLabel2)
-                                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                        .addComponent(jLabel1)
-                                        .addGroup(layout.createSequentialGroup()
-                                            .addGap(10, 10, 10)
-                                            .addComponent(jLabel3))))
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                    .addComponent(txtTeamName, javax.swing.GroupLayout.DEFAULT_SIZE, 145, Short.MAX_VALUE)
-                                    .addComponent(cmbTeamCaptain, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
-                        .addGap(0, 0, Short.MAX_VALUE)))
+                                .addComponent(jLabel1)
+                                .addGap(1, 1, 1)))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(txtTeamName, javax.swing.GroupLayout.PREFERRED_SIZE, 145, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(jLabel5)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(txtCaptain, javax.swing.GroupLayout.PREFERRED_SIZE, 145, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(34, 34, 34))
+                    .addComponent(jSeparator4)
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.Alignment.TRAILING))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
@@ -121,22 +151,22 @@ public class UpdateTeamForm extends javax.swing.JFrame {
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(jLabel1)
-                .addGap(0, 0, 0)
-                .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, 6, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(3, 3, 3)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel4)
-                    .addComponent(cmbSelectTeam, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel2)
-                    .addComponent(txtTeamName, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(18, 18, 18)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel3)
-                    .addComponent(cmbTeamCaptain, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(jLabel2)
+                        .addComponent(txtTeamName, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(txtCaptain, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(jLabel5)))
                 .addGap(18, 18, 18)
                 .addComponent(jSeparator3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 223, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(jSeparator4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(buttonUpdate)
@@ -149,19 +179,52 @@ public class UpdateTeamForm extends javax.swing.JFrame {
 
     private void buttonDeleteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonDeleteActionPerformed
         // TODO add your handling code here:
+       
     }//GEN-LAST:event_buttonDeleteActionPerformed
 
     private void buttonUpdateActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonUpdateActionPerformed
         // TODO add your handling code here:
+        DefaultTableModel model =(DefaultTableModel) tablePlayers.getModel();
+        String teamName;
+        int captainID;
+        int selectedRow = tablePlayers.getSelectedRow();
+        
+        
+        teamName = txtTeamName.getText();
+        captainID = Integer.parseInt(model.getValueAt(selectedRow,0).toString());
+        
+        Team t = new Team("jflDB");
+        t.updateRecord(teamID,teamName,captainID);
+        t.closeConnection();
+        
+        JOptionPane.showMessageDialog(this, "Record Updated!");
+ 
     }//GEN-LAST:event_buttonUpdateActionPerformed
 
     private void txtTeamNameActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtTeamNameActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_txtTeamNameActionPerformed
 
-    private void cmbSelectTeamActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cmbSelectTeamActionPerformed
+    private void tablePlayersMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tablePlayersMouseClicked
         // TODO add your handling code here:
-    }//GEN-LAST:event_cmbSelectTeamActionPerformed
+        int selectedRow = tablePlayers.getSelectedRow();
+        int selectedID;
+        String firstName;
+        String lastName;
+        
+
+        DefaultTableModel model =(DefaultTableModel) tablePlayers.getModel();
+
+        selectedID = Integer.parseInt(model.getValueAt(selectedRow,0).toString());
+        firstName = model.getValueAt(selectedRow,1).toString();
+        lastName = model.getValueAt(selectedRow,2).toString();
+        
+        txtCaptain.setText(firstName+" "+lastName);
+    }//GEN-LAST:event_tablePlayersMouseClicked
+
+    private void txtCaptainActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtCaptainActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtCaptainActionPerformed
 
     /**
      * @param args the command line arguments
@@ -198,29 +261,66 @@ public class UpdateTeamForm extends javax.swing.JFrame {
         });
     }
     
-    private void cmbTeamPopulate(){
+    private void loadDetails(int id){
+        int captainID;
+        String firstName;
+        String lastName;
         Team t = new Team("jflDB");
-        String[] teams = t.populateTeamComboBox();
-        
-       for( int i=0; i<teams.length ; i++){
-           cmbSelectTeam.addItem(teams[i]);
-        }
-       
+        Object[] teamRecord = t.loadDetails(id);
         t.closeConnection();
+
+        txtTeamName.setText(teamRecord[1].toString());
+        captainID = Integer.parseInt(teamRecord[2].toString());
         
+        Player p = new Player("jflDB");
+        if(captainID > 0){
+            Object[] playerRecord = p.loadDetails(captainID);
+            firstName = playerRecord[1].toString();
+            lastName = playerRecord[2].toString();
+            txtCaptain.setText(firstName+" "+lastName);
+        }
+        p.closeConnection();
+        
+        
+        
+    }
+    
+    private void loadTeamPlayers(int id){
+        DefaultTableModel model =(DefaultTableModel) tablePlayers.getModel();
+      
+        model.setRowCount(0);
+        
+        String playerID;
+        String firstName;
+        String lastName;
+        String position;
+        
+        Player p = new Player("jflDB");
+        Object[][] players = p.loadTeamPlayers(id);
+        for (int i=0; i< players.length;i++){
+            
+            playerID = players[i][1].toString();
+            firstName = players[i][2].toString();
+            lastName = players[i][3].toString();
+            position = players[i][4].toString();
+          model.addRow(new Object[]{playerID, firstName,lastName,position});
+        }
+        p.closeConnection();
+
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton buttonDelete;
     private javax.swing.JButton buttonUpdate;
-    private javax.swing.JComboBox<String> cmbSelectTeam;
-    private javax.swing.JComboBox<String> cmbTeamCaptain;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
-    private javax.swing.JLabel jLabel3;
-    private javax.swing.JLabel jLabel4;
+    private javax.swing.JLabel jLabel5;
+    private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JSeparator jSeparator1;
     private javax.swing.JSeparator jSeparator3;
+    private javax.swing.JSeparator jSeparator4;
+    private javax.swing.JTable tablePlayers;
+    private javax.swing.JTextField txtCaptain;
     private javax.swing.JTextField txtTeamName;
     // End of variables declaration//GEN-END:variables
 

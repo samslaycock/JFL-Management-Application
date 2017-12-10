@@ -70,6 +70,16 @@ public class Player extends DBConnection {
         }
     }
     
+    public void deleteRecord (int id){
+        final String updateStmt = "DELETE FROM jfl.players WHERE PlayerID="+id;
+        try {
+        PreparedStatement pstmt = getConnection().prepareStatement(updateStmt);
+        pstmt.executeUpdate();
+        } catch (SQLException sqle) {
+            System.out.println("Exception when deleting player record:" + sqle.toString());
+        }
+    }
+        
     
     public Object[][] loadTeamPlayers(int teamid){
         int recordCount;

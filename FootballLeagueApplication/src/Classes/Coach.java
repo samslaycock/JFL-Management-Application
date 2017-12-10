@@ -76,6 +76,16 @@ public class Coach extends DBConnection {
         }
     }
     
+    public void deleteRecord (int id){
+        final String updateStmt = "DELETE FROM jfl.coaches WHERE CoachID="+id;
+        try {
+        PreparedStatement pstmt = getConnection().prepareStatement(updateStmt);
+        pstmt.executeUpdate();
+        } catch (SQLException sqle) {
+            System.out.println("Exception when deleting coach record:" + sqle.toString());
+        }
+    }
+    
     public Object[][] loadTeamCoaches(int teamid){
         int recordCount;
         try {
