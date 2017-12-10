@@ -37,7 +37,7 @@ public class Team extends DBConnection {
         try {
             int maxCount;
             try {
-                final String countQuery = "SELECT Max(TeamID) AS teamCount FROM jfl.teams";
+                final String countQuery = "SELECT Max(TeamID) AS maxCount FROM jfl.teams";
                 this.setQuery(countQuery);
                 this.runQuery();
                 ResultSet output = this.getResultSet();
@@ -59,37 +59,72 @@ public class Team extends DBConnection {
             System.out.println("Exception when inserting team record:" + sqle.toString());
         }
     }
-    
-    public void updateRecord (int id, final String firstname, final int captainID){
-        final String updateStmt = "UPDATE jfl.teams SET TeamName='"+firstname+"',  CaptainID="+captainID+" WHERE TeamID="+id;
+
+    public void updateRecord(int id, final String firstname, final int captainID) {
+        final String updateStmt = "UPDATE jfl.teams SET TeamName='" + firstname + "',  CaptainID=" + captainID + " WHERE TeamID=" + id;
         try {
-        PreparedStatement pstmt = getConnection().prepareStatement(updateStmt);
-        pstmt.executeUpdate();
+            PreparedStatement pstmt = getConnection().prepareStatement(updateStmt);
+            pstmt.executeUpdate();
         } catch (SQLException sqle) {
             System.out.println("Exception when updating team record:" + sqle.toString());
         }
     }
-    
-    public Object[] loadDetails(final int teamID){
+
+    public void deleteRecord(int id) {
+        String deleteStmt = "DELETE FROM jfl.teams WHERE TeamID=" + id;
+        try {
+            PreparedStatement pstmt = getConnection().prepareStatement(deleteStmt);
+            pstmt.executeUpdate();
+        } catch (SQLException sqle) {
+            System.out.println("Exception when deleting team record:" + sqle.toString());
+        }
+
+        deleteStmt = "UPDATE jfl.players SET TeamID=0 WHERE TeamID=" + id;
+        try {
+            PreparedStatement pstmt = getConnection().prepareStatement(deleteStmt);
+            pstmt.executeUpdate();
+        } catch (SQLException sqle) {
+            System.out.println("Exception when updating player record:" + sqle.toString());
+        }
+
+        deleteStmt = "UPDATE jfl.coaches SET TeamID=0 WHERE TeamID=" + id;
+        try {
+            PreparedStatement pstmt = getConnection().prepareStatement(deleteStmt);
+            pstmt.executeUpdate();
+        } catch (SQLException sqle) {
+            System.out.println("Exception when updating coach record:" + sqle.toString());
+        }
+
+        deleteStmt = "UPDATE jfl.managers SET TeamID=0 WHERE TeamID=" + id;
+        try {
+            PreparedStatement pstmt = getConnection().prepareStatement(deleteStmt);
+            pstmt.executeUpdate();
+        } catch (SQLException sqle) {
+            System.out.println("Exception when updating manager record:" + sqle.toString());
+        }
+
+    }
+
+    public Object[] loadDetails(final int teamID) {
         Object[] teamRecord = new Object[3];
         try {
-            final String allQuery = "SELECT * FROM jfl.teams WHERE TeamID="+teamID;
+            final String allQuery = "SELECT * FROM jfl.teams WHERE TeamID=" + teamID;
             this.setQuery(allQuery);
             this.runQuery();
             ResultSet output = this.getResultSet();
             output.next();
-            
+
             teamRecord[0] = output.getString("TeamID");
             teamRecord[1] = output.getString("TeamName");
             teamRecord[2] = output.getString("CaptainID");
-            
-         } catch (SQLException sqle) {
+
+        } catch (SQLException sqle) {
             System.out.println("Exception when loading team details:" + sqle.toString());
-        }   
-         return teamRecord;
+        }
+        return teamRecord;
     }
-    
-    public Object[][] loadAllTeams(){
+
+    public Object[][] loadAllTeams() {
         int recordCount;
         try {
             final String countQuery = "SELECT COUNT(TeamID) AS teamCount FROM jfl.teams";
@@ -102,7 +137,7 @@ public class Team extends DBConnection {
             recordCount = 0;
             System.out.println("Exception when getting team count:" + sqle.toString());
         }
-        
+
         Object[][] teamRecords = new Object[recordCount][4];
         int arrayCount = 0;
         int captainID = 0;
@@ -114,20 +149,26 @@ public class Team extends DBConnection {
             ResultSet output = this.getResultSet();
             while ((output.next()) && (arrayCount < recordCount)) {
                 captainID = Integer.parseInt(output.getString("CaptainID"));
-                if(captainID > 0){
+                if (captainID > 0) {
                     Player p = new Player("jflDB");
                     Object[] playerRecord = p.loadDetails(captainID);
                     p.closeConnection();
                     captainName = playerRecord[1] + " " + playerRecord[2];
-                }else{
+                } else {
                     captainName = "No Captain";
                 }
 
                 teamRecords[arrayCount][0] = output.getString("TeamID");
-                teamRecords[arrayCount][1] = output.getString("TeamName");
+
+                if (Integer.parseInt(teamRecords[arrayCount][0].toString()) > 0) {
+                    teamRecords[arrayCount][1] = output.getString("TeamName");
+                } else {
+                    teamRecords[arrayCount][1] = "No Team";
+                }
+
                 teamRecords[arrayCount][2] = captainID;
                 teamRecords[arrayCount][3] = captainName;
-                
+
                 arrayCount++;
             }
         } catch (SQLException sqle) {
@@ -163,28 +204,30 @@ public class Team extends DBConnection {
             }
 
         } catch (SQLException sqle) {
-            System.out.println("Exception when inserting populating combo box:" + sqle.toString());
+            System.out.println("Exception when  populating combo box:" + sqle.toString());
 
         }
         return comboArray;
     }
-    
-    public String getTeamName(int teamid){
-         String teamName = "";
-        try {
-            final String allQuery = "SELECT TeamName FROM jfl.teams WHERE TeamID="+teamid;
-            this.setQuery(allQuery);
-            this.runQuery();
-            ResultSet output = this.getResultSet();
-            output.next();
-            teamName = output.getString("TeamName");
-           
-        } catch (SQLException sqle) {
-            System.out.println("Exception when inserting obtaining Team Name:" + sqle.toString());
 
+    public String getTeamName(int teamid) {
+        String teamName = "No Team";
+        if (teamid > 0) {
+            try {
+                final String allQuery = "SELECT TeamName FROM jfl.teams WHERE TeamID=" + teamid;
+                this.setQuery(allQuery);
+                this.runQuery();
+                ResultSet output = this.getResultSet();
+                output.next();
+                teamName = output.getString("TeamName");
+
+            } catch (SQLException sqle) {
+                System.out.println("Exception when  obtaining Team Name:" + sqle.toString());
+
+            }
         }
-        
-        return teamName;  
+
+        return teamName;
     }
 
 }

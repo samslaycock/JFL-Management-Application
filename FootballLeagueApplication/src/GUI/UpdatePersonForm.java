@@ -222,13 +222,26 @@ public class UpdatePersonForm extends javax.swing.JFrame {
         int selectedType;
         String firstName;
         String lastName;
+        int selectedTeamIndex;
         int teamID;
         String position;
 
         selectedType = cmbPersonType.getSelectedIndex();
         firstName = txtFirstName.getText();
         lastName = txtSurname.getText();
-        teamID = cmbTeam.getSelectedIndex();
+        
+        Team t = new Team("jflDB");
+        Object[][] teamRecords = t.loadAllTeams();
+        t.closeConnection();
+        
+        selectedTeamIndex = cmbTeam.getSelectedIndex();
+        if(selectedTeamIndex > 0){
+        selectedTeamIndex = selectedTeamIndex - 1;
+        teamID = Integer.parseInt(teamRecords[selectedTeamIndex][0].toString());
+        }else{
+        teamID = 0;
+        }
+        
         position = String.valueOf(cmbPosition.getSelectedItem());
         
       

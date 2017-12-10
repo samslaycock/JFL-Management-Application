@@ -13,7 +13,7 @@ import javax.swing.JOptionPane;
  * @author blao
  */
 public class AddPersonForm extends javax.swing.JFrame {
-
+    
     /**
      * Creates new form AddPersonForm
      */
@@ -195,13 +195,22 @@ public class AddPersonForm extends javax.swing.JFrame {
         int selectedType;
         String firstName;
         String lastName;
+        int selectedTeamIndex;
         int teamID;
         String position;
         
         selectedType = cmbPersonType.getSelectedIndex();
         firstName = txtFirstName.getText();
         lastName = txtLastName.getText();
-        teamID = cmbTeam.getSelectedIndex();
+        
+        Team t = new Team("jflDB");
+        Object[][] teamRecords = t.loadAllTeams();
+        t.closeConnection();
+        
+        selectedTeamIndex = cmbTeam.getSelectedIndex();
+        selectedTeamIndex = selectedTeamIndex - 1;
+        teamID = Integer.parseInt(teamRecords[selectedTeamIndex][0].toString());
+        
         position = String.valueOf(cmbPosition.getSelectedItem());
         
         switch (selectedType){

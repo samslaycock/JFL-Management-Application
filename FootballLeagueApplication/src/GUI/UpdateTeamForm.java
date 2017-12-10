@@ -179,6 +179,17 @@ public class UpdateTeamForm extends javax.swing.JFrame {
 
     private void buttonDeleteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonDeleteActionPerformed
         // TODO add your handling code here:
+        int confirmDelete = JOptionPane.showConfirmDialog(this, "Do you want to delete this team record?", "Delete Record", JOptionPane.YES_NO_OPTION);
+        if (confirmDelete == 0) {
+            System.out.println("Confirmed");
+            Team t = new Team("jflDB");
+            t.deleteRecord(teamID);
+            t.closeConnection();
+            
+        } else {
+            System.out.println("Not Confirmed");
+        }
+
        
     }//GEN-LAST:event_buttonDeleteActionPerformed
 
