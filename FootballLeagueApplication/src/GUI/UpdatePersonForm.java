@@ -274,6 +274,7 @@ public class UpdatePersonForm extends javax.swing.JFrame {
         }
         
         JOptionPane.showMessageDialog(this, "Record Updated!");
+        this.dispose();
 
 
     }//GEN-LAST:event_buttonUpdateActionPerformed
@@ -312,6 +313,8 @@ public class UpdatePersonForm extends javax.swing.JFrame {
 
                     break;
             }
+            JOptionPane.showMessageDialog(this, "Record Deleted!");
+            this.dispose();
         } else {
             System.out.println("Not Confirmed");
         }

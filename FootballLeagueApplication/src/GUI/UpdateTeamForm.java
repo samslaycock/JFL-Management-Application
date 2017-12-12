@@ -186,29 +186,38 @@ public class UpdateTeamForm extends javax.swing.JFrame {
             t.deleteRecord(teamID);
             t.closeConnection();
             
+            JOptionPane.showMessageDialog(this, "Record Deleted!");
+            this.dispose();
+            
         } else {
             System.out.println("Not Confirmed");
         }
-
-       
+   
     }//GEN-LAST:event_buttonDeleteActionPerformed
 
     private void buttonUpdateActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonUpdateActionPerformed
         // TODO add your handling code here:
         DefaultTableModel model =(DefaultTableModel) tablePlayers.getModel();
         String teamName;
-        int captainID;
+        Integer captainID;
         int selectedRow = tablePlayers.getSelectedRow();
         
         
         teamName = txtTeamName.getText();
+        
+        
+        if(selectedRow >= 0){
         captainID = Integer.parseInt(model.getValueAt(selectedRow,0).toString());
+        }else{
+            captainID = 0;
+        }
         
         Team t = new Team("jflDB");
         t.updateRecord(teamID,teamName,captainID);
         t.closeConnection();
         
         JOptionPane.showMessageDialog(this, "Record Updated!");
+        this.dispose();
  
     }//GEN-LAST:event_buttonUpdateActionPerformed
 

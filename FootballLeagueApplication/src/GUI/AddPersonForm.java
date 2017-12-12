@@ -302,9 +302,8 @@ public class AddPersonForm extends javax.swing.JFrame {
        for( int i=0; i<teams.length ; i++){
            cmbTeam.addItem(teams[i]);
         }
-       
-        t.closeConnection();
-        
+ 
+        t.closeConnection(); 
     }
     
     private void recordAdded(){

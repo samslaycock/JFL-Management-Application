@@ -126,8 +126,19 @@ public class ViewTeamMembersForm extends javax.swing.JFrame {
 
     private void cmbTeamNamesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cmbTeamNamesActionPerformed
         // TODO add your handling code here:
-        int selectedTeam = cmbTeamNames.getSelectedIndex();
-        this.loadTeamMembers(selectedTeam);
+        int selectedIndex = cmbTeamNames.getSelectedIndex();
+        if (selectedIndex > 0) {
+            selectedIndex = selectedIndex - 1;
+
+            int selectedTeamID;
+            Team t = new Team("jflDB");
+            Object[][] teamRecords = t.loadAllTeams();
+            t.closeConnection();
+
+            selectedTeamID = Integer.parseInt(teamRecords[selectedIndex][0].toString());
+
+            this.loadTeamMembers(selectedTeamID);
+        }
     }//GEN-LAST:event_cmbTeamNamesActionPerformed
 
     /**
