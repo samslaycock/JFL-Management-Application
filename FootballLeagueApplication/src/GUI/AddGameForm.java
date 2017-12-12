@@ -5,8 +5,10 @@
  */
 package GUI;
 
+import Classes.Game;
 import Classes.Referee;
 import Classes.Team;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -85,7 +87,7 @@ public class AddGameForm extends javax.swing.JFrame {
 
         jLabel7.setText("Game Date:");
 
-        txtDate1.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.DateFormatter(new java.text.SimpleDateFormat("dd/MM/yyyy"))));
+        txtDate1.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.DateFormatter(new java.text.SimpleDateFormat("yyyy-MM-dd"))));
         txtDate1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 txtDate1ActionPerformed(evt);
@@ -145,7 +147,7 @@ public class AddGameForm extends javax.swing.JFrame {
 
         jLabel17.setText("Game Date:");
 
-        txtDate2.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.DateFormatter(new java.text.SimpleDateFormat("dd/MM/yyyy"))));
+        txtDate2.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.DateFormatter(new java.text.SimpleDateFormat("yyyy-MM-dd"))));
         txtDate2.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 txtDate2ActionPerformed(evt);
@@ -389,6 +391,100 @@ public class AddGameForm extends javax.swing.JFrame {
 
     private void buttonAddActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonAddActionPerformed
         // TODO add your handling code here:
+        int gameSet;
+        int homeIndex;
+        int awayIndex;
+        int homeID;
+        int awayID;
+        
+        int homeGoals;
+        int awayGoals;
+        
+        int refereeIndex;
+        int refereeID;
+        
+        String date;
+        
+        Team t = new Team("jflDB");
+        Object[][] teamRecords = t.loadAllTeams();
+        t.closeConnection();
+        
+        //Add 1st Game of Game set
+        
+        homeIndex = cmbHomeTeam1.getSelectedIndex();
+        if(homeIndex > 0){
+        homeIndex = homeIndex - 1;
+        homeID = Integer.parseInt(teamRecords[homeIndex][0].toString());
+        }else{
+            homeID = 0;
+        }
+        
+        awayIndex = cmbAwayTeam1.getSelectedIndex();
+        if(awayIndex > 0){
+        awayIndex = awayIndex - 1;
+        awayID = Integer.parseInt(teamRecords[awayIndex][0].toString());
+        }else{
+            awayID = 0;
+        }
+        
+        homeGoals = (Integer) spnHomeGoals1.getValue();
+        awayGoals = (Integer) spnAwayGoals1.getValue();
+        
+        Referee r = new Referee("jflDB");
+        Object[][] refereeRecords = r.loadAllReferees();
+        r.closeConnection();
+       
+        refereeIndex = cmbReferee1.getSelectedIndex();
+        if(refereeIndex > 0){
+        refereeIndex = refereeIndex - 1;
+        refereeID = Integer.parseInt(refereeRecords[refereeIndex][1].toString());
+        }else{
+            refereeID = 0;
+        }
+        
+        date = txtDate1.getText();
+        
+        Game g = new Game("jflDB");
+        gameSet = g.getGameSet();
+        g.insertRecord(gameSet,1,homeID,awayID,homeGoals,awayGoals,refereeID,date);
+        
+        //Add 2nd Game of Game set
+        
+        homeIndex = cmbHomeTeam2.getSelectedIndex();
+        if(homeIndex > 0){
+        homeIndex = homeIndex - 1;
+        homeID = Integer.parseInt(teamRecords[homeIndex][0].toString());
+        }else{
+            homeID = 0;
+        }
+        
+        awayIndex = cmbAwayTeam2.getSelectedIndex();
+        if(awayIndex > 0){
+        awayIndex = awayIndex - 1;
+        awayID = Integer.parseInt(teamRecords[awayIndex][0].toString());
+        }else{
+            awayID = 0;
+        }
+        
+        homeGoals = (Integer) spnHomeGoals2.getValue();
+        awayGoals = (Integer) spnAwayGoals2.getValue();
+              
+        refereeIndex = cmbReferee2.getSelectedIndex();
+        if(refereeIndex > 0){
+        refereeIndex = refereeIndex - 1;
+        refereeID = Integer.parseInt(refereeRecords[refereeIndex][1].toString());
+        }else{
+            refereeID = 0;
+        }
+        
+        date = txtDate2.getText();
+        
+        g.insertRecord(gameSet,2,homeID,awayID,homeGoals,awayGoals,refereeID,date);
+        
+        g.closeConnection();
+        
+        JOptionPane.showMessageDialog(this, "Game successfully added.");
+          
     }//GEN-LAST:event_buttonAddActionPerformed
 
     /**

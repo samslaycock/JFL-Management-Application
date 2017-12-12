@@ -208,8 +208,12 @@ public class AddPersonForm extends javax.swing.JFrame {
         t.closeConnection();
         
         selectedTeamIndex = cmbTeam.getSelectedIndex();
+        if (selectedTeamIndex > 0){
         selectedTeamIndex = selectedTeamIndex - 1;
         teamID = Integer.parseInt(teamRecords[selectedTeamIndex][0].toString());
+        }else{
+            teamID = 0;
+        }
         
         position = String.valueOf(cmbPosition.getSelectedItem());
         
@@ -313,6 +317,7 @@ public class AddPersonForm extends javax.swing.JFrame {
         cmbTeam.setSelectedIndex(-1);
         txtFirstName.setText("");
         txtLastName.setText("");
+      
     }
     
 
