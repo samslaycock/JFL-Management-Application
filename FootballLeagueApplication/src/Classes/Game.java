@@ -44,7 +44,27 @@ public class Game extends DBConnection {
 
             pstmt.executeUpdate();
         } catch (SQLException sqle) {
-            System.out.println("Exception when inserting game record:" + sqle.toString());
+            System.out.println("Exception when inserting game set record:" + sqle.toString());
+        }
+    }
+    
+    public void updateRecord(int gameSet, int gameID, int homeID, int awayID, int homeGoals, int awayGoals, int refereeID, String date) {
+        final String updateStmt = "UPDATE jfl.games SET HomeID="+homeID+", AwayID="+awayID+", HomeGoals="+homeGoals+", AwayGoals="+awayGoals+", RefereeID="+refereeID+", Date='"+date+"' WHERE GameID="+gameID+" AND GameSet=" + gameSet;
+        try {
+            PreparedStatement pstmt = getConnection().prepareStatement(updateStmt);
+            pstmt.executeUpdate();
+        } catch (SQLException sqle) {
+            System.out.println("Exception when updating team record:" + sqle.toString());
+        }
+    }
+    
+    public void deleteRecord(int gameSet){
+        String deleteStmt = "DELETE FROM jfl.games WHERE GameSet=" + gameSet;
+        try {
+            PreparedStatement pstmt = getConnection().prepareStatement(deleteStmt);
+            pstmt.executeUpdate();
+        } catch (SQLException sqle) {
+            System.out.println("Exception when deleting game set record:" + sqle.toString());
         }
     }
     

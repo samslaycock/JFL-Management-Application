@@ -69,7 +69,7 @@ public class UpdateGameSetForm extends javax.swing.JFrame {
         cmbAwayTeam2 = new javax.swing.JComboBox<>();
         spnHomeGoals2 = new javax.swing.JSpinner();
         jSeparator3 = new javax.swing.JSeparator();
-        buttonAdd = new javax.swing.JButton();
+        buttonUpdate = new javax.swing.JButton();
         jSeparator1 = new javax.swing.JSeparator();
         jLabel1 = new javax.swing.JLabel();
         jLabel7 = new javax.swing.JLabel();
@@ -78,6 +78,7 @@ public class UpdateGameSetForm extends javax.swing.JFrame {
         jLabel3 = new javax.swing.JLabel();
         spnAwayGoals2 = new javax.swing.JSpinner();
         jLabel12 = new javax.swing.JLabel();
+        buttonDelete = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Update Game");
@@ -149,10 +150,10 @@ public class UpdateGameSetForm extends javax.swing.JFrame {
         cmbAwayTeam2.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { " " }));
         cmbAwayTeam2.setEnabled(false);
 
-        buttonAdd.setText("Add Game Set");
-        buttonAdd.addActionListener(new java.awt.event.ActionListener() {
+        buttonUpdate.setText("Update Game Set");
+        buttonUpdate.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                buttonAddActionPerformed(evt);
+                buttonUpdateActionPerformed(evt);
             }
         });
 
@@ -177,47 +178,51 @@ public class UpdateGameSetForm extends javax.swing.JFrame {
         jLabel12.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
         jLabel12.setText("-");
 
+        buttonDelete.setText("Delete Game Set");
+        buttonDelete.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                buttonDeleteActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 519, Short.MAX_VALUE)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addContainerGap(110, Short.MAX_VALUE)
+                .addComponent(buttonUpdate)
+                .addGap(42, 42, 42)
+                .addComponent(buttonDelete)
+                .addGap(110, 110, 110))
             .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(layout.createSequentialGroup()
                     .addGap(19, 19, 19)
                     .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                        .addComponent(jSeparator3)
-                        .addComponent(jSeparator1)
                         .addGroup(layout.createSequentialGroup()
                             .addGap(70, 70, 70)
                             .addComponent(jLabel2)
                             .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addComponent(jLabel3)
-                            .addGap(70, 70, 70))
+                            .addGap(90, 90, 90))
                         .addGroup(layout.createSequentialGroup()
                             .addGap(45, 45, 45)
                             .addComponent(cmbHomeTeam1, javax.swing.GroupLayout.PREFERRED_SIZE, 124, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addComponent(cmbAwayTeam1, javax.swing.GroupLayout.PREFERRED_SIZE, 124, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addGap(45, 45, 45))
-                        .addComponent(jSeparator4, javax.swing.GroupLayout.Alignment.TRAILING)
-                        .addComponent(jSeparator2)
+                            .addGap(65, 65, 65))
                         .addGroup(layout.createSequentialGroup()
                             .addGap(70, 70, 70)
                             .addComponent(jLabel18)
                             .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addComponent(jLabel11)
-                            .addGap(70, 70, 70))
+                            .addGap(90, 90, 90))
                         .addGroup(layout.createSequentialGroup()
                             .addGap(45, 45, 45)
                             .addComponent(cmbHomeTeam2, javax.swing.GroupLayout.PREFERRED_SIZE, 124, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addComponent(cmbAwayTeam2, javax.swing.GroupLayout.PREFERRED_SIZE, 124, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addGap(45, 45, 45))
-                        .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(buttonAdd)
-                            .addGap(190, 190, 190))
+                            .addGap(65, 65, 65))
                         .addGroup(layout.createSequentialGroup()
                             .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                 .addGroup(layout.createSequentialGroup()
@@ -275,15 +280,26 @@ public class UpdateGameSetForm extends javax.swing.JFrame {
                                             .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                                             .addComponent(txtDate1, javax.swing.GroupLayout.PREFERRED_SIZE, 111, javax.swing.GroupLayout.PREFERRED_SIZE))))
                                 .addComponent(jLabel23))
-                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                            .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                         .addGroup(layout.createSequentialGroup()
                             .addComponent(jLabel1)
-                            .addGap(0, 0, Short.MAX_VALUE)))
-                    .addGap(20, 20, 20)))
+                            .addGap(0, 0, Short.MAX_VALUE))
+                        .addGroup(layout.createSequentialGroup()
+                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                .addComponent(jSeparator3)
+                                .addComponent(jSeparator1)
+                                .addComponent(jSeparator4, javax.swing.GroupLayout.Alignment.TRAILING)
+                                .addComponent(jSeparator2))
+                            .addGap(20, 20, 20)))))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 516, Short.MAX_VALUE)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addContainerGap(482, Short.MAX_VALUE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(buttonDelete)
+                    .addComponent(buttonUpdate))
+                .addContainerGap())
             .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(layout.createSequentialGroup()
                     .addContainerGap()
@@ -355,9 +371,7 @@ public class UpdateGameSetForm extends javax.swing.JFrame {
                                 .addComponent(cmbReferee2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                             .addGap(18, 18, 18)
                             .addComponent(jSeparator4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                    .addComponent(buttonAdd)
-                    .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                    .addContainerGap(45, Short.MAX_VALUE)))
         );
 
         pack();
@@ -379,7 +393,7 @@ public class UpdateGameSetForm extends javax.swing.JFrame {
         this.cmbTeamSelect(teamBox);
     }//GEN-LAST:event_cmbAwayTeam1ActionPerformed
 
-    private void buttonAddActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonAddActionPerformed
+    private void buttonUpdateActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonUpdateActionPerformed
         // TODO add your handling code here:
         int gameSet;
         int homeIndex;
@@ -435,8 +449,8 @@ public class UpdateGameSetForm extends javax.swing.JFrame {
         date = txtDate1.getText();
 
         Game g = new Game("jflDB");
-        gameSet = g.getGameSet();
-        g.insertRecord(gameSet,1,homeID,awayID,homeGoals,awayGoals,refereeID,date);
+        g.updateRecord(currentGameSet,1,homeID,awayID,homeGoals,awayGoals,refereeID,date);
+       
 
         //Add 2nd Game of Game set
 
@@ -469,17 +483,34 @@ public class UpdateGameSetForm extends javax.swing.JFrame {
 
         date = txtDate2.getText();
 
-        g.insertRecord(gameSet,2,homeID,awayID,homeGoals,awayGoals,refereeID,date);
+        g.updateRecord(currentGameSet,2,homeID,awayID,homeGoals,awayGoals,refereeID,date);
 
         g.closeConnection();
 
-        JOptionPane.showMessageDialog(this, "Game successfully added.");
+        JOptionPane.showMessageDialog(this, "Game successfully updated.");
 
-    }//GEN-LAST:event_buttonAddActionPerformed
+    }//GEN-LAST:event_buttonUpdateActionPerformed
 
     private void txtDate1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtDate1ActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_txtDate1ActionPerformed
+
+    private void buttonDeleteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonDeleteActionPerformed
+        // TODO add your handling code here:
+        int confirmDelete = JOptionPane.showConfirmDialog(this, "Do you want to delete this game record?", "Delete Record", JOptionPane.YES_NO_OPTION);
+        if (confirmDelete == 0) {
+            System.out.println("Confirmed");
+            Game g = new Game("jflDB");
+            g.deleteRecord(currentGameSet);
+            g.closeConnection();
+        
+            JOptionPane.showMessageDialog(this, "Record Deleted!");
+            this.dispose();
+        }else{
+            System.out.println("Not Confirmed");
+            
+        }
+    }//GEN-LAST:event_buttonDeleteActionPerformed
 
     /**
      * @param args the command line arguments
@@ -615,7 +646,8 @@ public class UpdateGameSetForm extends javax.swing.JFrame {
         }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton buttonAdd;
+    private javax.swing.JButton buttonDelete;
+    private javax.swing.JButton buttonUpdate;
     private javax.swing.JComboBox<String> cmbAwayTeam1;
     private javax.swing.JComboBox<String> cmbAwayTeam2;
     private javax.swing.JComboBox<String> cmbHomeTeam1;
