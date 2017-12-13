@@ -5,6 +5,10 @@
  */
 package GUI;
 
+import Classes.Game;
+import javax.swing.table.DefaultTableModel;
+import static jdk.nashorn.internal.runtime.Debug.id;
+
 /**
  *
  * @author blao
@@ -16,6 +20,7 @@ public class ViewGamesForm extends javax.swing.JFrame {
      */
     public ViewGamesForm() {
         initComponents();
+        loadGames();
     }
 
     /**
@@ -40,21 +45,17 @@ public class ViewGamesForm extends javax.swing.JFrame {
 
         tableGames.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null}
+
             },
             new String [] {
-                "Date", "Home Team", "Away Team", "Home Goals", "Away Goals", "Referee"
+                "Game Set", "Home Team", "Away Team", "Home Goals", "Away Goals", "Referee", "Date"
             }
         ) {
             Class[] types = new Class [] {
-                java.lang.Object.class, java.lang.String.class, java.lang.String.class, java.lang.Integer.class, java.lang.Integer.class, java.lang.String.class
+                java.lang.Integer.class, java.lang.String.class, java.lang.String.class, java.lang.Integer.class, java.lang.Integer.class, java.lang.String.class, java.lang.String.class
             };
             boolean[] canEdit = new boolean [] {
-                false, false, false, false, false, false
+                false, false, false, false, false, false, false
             };
 
             public Class getColumnClass(int columnIndex) {
@@ -63,6 +64,11 @@ public class ViewGamesForm extends javax.swing.JFrame {
 
             public boolean isCellEditable(int rowIndex, int columnIndex) {
                 return canEdit [columnIndex];
+            }
+        });
+        tableGames.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                tableGamesMouseClicked(evt);
             }
         });
         jScrollPane1.setViewportView(tableGames);
@@ -95,6 +101,21 @@ public class ViewGamesForm extends javax.swing.JFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void tableGamesMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tableGamesMouseClicked
+        // TODO add your handling code here:
+        int selectedRow = tableGames.getSelectedRow();
+        int selectedGameSet;
+        
+
+        DefaultTableModel model =(DefaultTableModel) tableGames.getModel();
+
+        
+        selectedGameSet = Integer.parseInt(model.getValueAt(selectedRow,0).toString());
+
+        new UpdateGameSetForm(selectedGameSet).setVisible(true);
+        this.dispose();
+    }//GEN-LAST:event_tableGamesMouseClicked
 
     /**
      * @param args the command line arguments
@@ -130,6 +151,37 @@ public class ViewGamesForm extends javax.swing.JFrame {
             }
         });
     }
+    
+    
+   private void loadGames(){
+        DefaultTableModel model =(DefaultTableModel) tableGames.getModel();
+         model.setRowCount(0);
+         
+        int gameSet;
+        String homeTeam;
+        String awayTeam;
+        int homeGoals;
+        int awayGoals;
+        String refereeName;
+        String gameDate;
+        
+         
+        Game g = new Game("jflDB");
+        Object[][] games = g.loadGames();
+        g.closeConnection();
+         for (int i=0; i< games.length;i++){
+            gameSet = Integer.parseInt(games[i][0].toString());
+            homeTeam = games[i][1].toString();
+            awayTeam = games[i][2].toString();
+            homeGoals = Integer.parseInt(games[i][3].toString());
+            awayGoals = Integer.parseInt(games[i][4].toString());
+            refereeName = games[i][5].toString();
+            gameDate = games[i][6].toString();
+
+          model.addRow(new Object[]{gameSet, homeTeam, awayTeam, homeGoals, awayGoals, refereeName, gameDate});
+        }
+        
+   }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel jLabel1;
