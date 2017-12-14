@@ -173,6 +173,103 @@ public class Game extends DBConnection {
         }
         return gameSetRecord;
     }
+    
+    public Object[] loadLeagueRecord(int teamID){
+        int recordCount;
+        try {
+            final String countQuery = "SELECT COUNT(GameSet) AS gameCount FROM jfl.games";
+            this.setQuery(countQuery);
+            this.runQuery();
+            ResultSet output = this.getResultSet();
+            output.next();
+            recordCount = output.getInt("gameCount");
+        } catch (SQLException sqle) {
+            recordCount = 0;
+            System.out.println("Exception when getting Game count:" + sqle.toString());
+        }
+        
+        Object[][] gameRecords = new Object[recordCount][7];
+        Object[] leagueRecord = new Object[9];
+        String teamName = "";
+        int homeID;
+        int awayID;
+        int gamesPlayed = 0;
+        int homeGoals = 0;
+        int awayGoals = 0;
+        int winCount = 0;
+        int drawCount = 0;
+        int lossCount = 0;
+        int goalsFor = 0;
+        int goalsAgainst = 0;
+        int goalDifference = 0;
+        int points = 0;
+        
+        int arrayCount = 0;
+        try {
+            final String allQuery = "SELECT * FROM jfl.games";
+            this.setQuery(allQuery);
+            this.runQuery();
+            ResultSet output = this.getResultSet();
+            while ((output.next()) && (arrayCount < recordCount)) {
+                Team t = new Team("jflDB");
+                teamName = t.getTeamName(teamID);
+                t.closeConnection();
+                
+                homeID = output.getInt("HomeID");
+                awayID = output.getInt("AwayID");
+                homeGoals = output.getInt("HomeGoals");
+                awayGoals = output.getInt("AwayGoals");
+                
+                gamesPlayed++;
+                
+                if(homeID == teamID){
+                    goalsFor = goalsFor + homeGoals;
+                    goalsAgainst = goalsAgainst + awayGoals;
+                    
+                    if(homeGoals > awayGoals){
+                        winCount++;
+                    }else if(homeGoals == awayGoals){
+                        drawCount++;
+                    }else{
+                        lossCount++;
+                    }
+                    
+                }else if(awayID == teamID){
+                    goalsFor = goalsFor + awayGoals;
+                    goalsAgainst = goalsAgainst + homeGoals;
+                    
+                    if(awayGoals > homeGoals){
+                        winCount++;
+                    }else if(homeGoals == awayGoals){
+                        drawCount++;
+                    }else{
+                        lossCount++;
+                    }
+                }
+                
+            }
+        } catch (SQLException sqle) {
+            System.out.println("Exception when calculating league table:" + sqle.toString());
+        }
+        
+        goalDifference = goalsFor - goalsAgainst;
+        
+        points = (winCount*3) + (drawCount);
+        
+       leagueRecord[0] = teamName;
+       leagueRecord[1] = gamesPlayed;
+       leagueRecord[2] = winCount;
+       leagueRecord[3] = drawCount;
+       leagueRecord[4] = lossCount;
+       leagueRecord[5] = goalsFor;
+       leagueRecord[6] = goalsAgainst;
+       leagueRecord[7] = goalDifference;
+       leagueRecord[8] = points;
+        
+        return leagueRecord;
+        
+        
+    }
 
     
 }

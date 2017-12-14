@@ -5,6 +5,10 @@
  */
 package GUI;
 
+import Classes.Game;
+import Classes.Team;
+import javax.swing.table.DefaultTableModel;
+
 /**
  *
  * @author blao
@@ -16,6 +20,7 @@ public class LeagueTableForm extends javax.swing.JFrame {
      */
     public LeagueTableForm() {
         initComponents();
+        loadLeagueTable();
     }
 
     /**
@@ -40,11 +45,7 @@ public class LeagueTableForm extends javax.swing.JFrame {
 
         tableLeagueTable.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null, null}
+
             },
             new String [] {
                 "Team Name", "Played", "Win", "Draw", "Loss", "Goals For", "Goals Against", "Goal Difference", "Points"
@@ -129,6 +130,53 @@ public class LeagueTableForm extends javax.swing.JFrame {
                 new LeagueTableForm().setVisible(true);
             }
         });
+    }
+    
+    private void loadLeagueTable(){
+        DefaultTableModel model =(DefaultTableModel) tableLeagueTable.getModel();
+      
+        model.setRowCount(0);
+        
+        Team t = new Team("jflDB");
+        Object[][] teamRecords = t.loadAllTeams();
+        t.closeConnection();
+        
+        
+        
+        int teamID;
+        String teamName;
+        int gamesPlayed = 0;
+        int homeGoals = 0;
+        int awayGoals = 0;
+        int winCount = 0;
+        int drawCount = 0;
+        int lossCount = 0;
+        int goalsFor = 0;
+        int goalsAgainst = 0;
+        int goalDifference = 0;
+        int points = 0;
+        for(int i=0;i<teamRecords.length;i++){
+            teamID = Integer.parseInt(teamRecords[i][0].toString());
+            
+            Game g = new Game("jflDB");
+            Object[] leagueRecord = g.loadLeagueRecord(teamID);
+            g.closeConnection();
+            
+            teamName = leagueRecord[0].toString();
+            gamesPlayed = Integer.parseInt(leagueRecord[1].toString());
+            winCount = Integer.parseInt(leagueRecord[2].toString());
+            drawCount = Integer.parseInt(leagueRecord[3].toString());
+            lossCount = Integer.parseInt(leagueRecord[4].toString());
+            goalsFor = Integer.parseInt(leagueRecord[5].toString());
+            goalsAgainst = Integer.parseInt(leagueRecord[6].toString());
+            goalDifference = Integer.parseInt(leagueRecord[7].toString());
+            points = Integer.parseInt(leagueRecord[8].toString());
+            
+            model.addRow(new Object[]{teamName, gamesPlayed, winCount, drawCount, lossCount, goalsFor, goalsAgainst, goalDifference, points});
+            
+            
+        }
+        
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
