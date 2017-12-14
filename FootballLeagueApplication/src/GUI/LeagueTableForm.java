@@ -7,7 +7,15 @@ package GUI;
 
 import Classes.Game;
 import Classes.Team;
+import java.util.ArrayList;
+import java.util.List;
+
+
+import javax.swing.RowSorter;
+import javax.swing.SortOrder;
 import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableModel;
+import javax.swing.table.TableRowSorter;
 
 /**
  *
@@ -134,6 +142,8 @@ public class LeagueTableForm extends javax.swing.JFrame {
     
     private void loadLeagueTable(){
         DefaultTableModel model =(DefaultTableModel) tableLeagueTable.getModel();
+  
+        //tableLeagueTable.setAutoCreateRowSorter(true);
       
         model.setRowCount(0);
         
@@ -172,10 +182,22 @@ public class LeagueTableForm extends javax.swing.JFrame {
             goalDifference = Integer.parseInt(leagueRecord[7].toString());
             points = Integer.parseInt(leagueRecord[8].toString());
             
-            model.addRow(new Object[]{teamName, gamesPlayed, winCount, drawCount, lossCount, goalsFor, goalsAgainst, goalDifference, points});
-            
-            
+            model.addRow(new Object[]{teamName, gamesPlayed, winCount, drawCount, lossCount, goalsFor, goalsAgainst, goalDifference, points}); 
         }
+        
+        TableRowSorter<TableModel> sorter = new TableRowSorter<>(tableLeagueTable.getModel());
+         tableLeagueTable.setRowSorter(sorter);
+        List<RowSorter.SortKey> sortKeys = new ArrayList<>();
+ 
+        int pointIndex = 8;
+        sortKeys.add(new RowSorter.SortKey(pointIndex, SortOrder.DESCENDING));
+        
+         int gdIndex = 7;
+        sortKeys.add(new RowSorter.SortKey(gdIndex, SortOrder.DESCENDING));
+ 
+        sorter.setSortKeys(sortKeys);
+        sorter.sort();
+        
         
     }
 
