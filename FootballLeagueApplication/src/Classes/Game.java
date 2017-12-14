@@ -188,7 +188,7 @@ public class Game extends DBConnection {
             System.out.println("Exception when getting Game count:" + sqle.toString());
         }
         
-        Object[][] gameRecords = new Object[recordCount][7];
+       // Object[][] gameRecords = new Object[recordCount][7];
         Object[] leagueRecord = new Object[9];
         String teamName = "";
         int homeID;
@@ -220,11 +220,12 @@ public class Game extends DBConnection {
                 homeGoals = output.getInt("HomeGoals");
                 awayGoals = output.getInt("AwayGoals");
                 
-                gamesPlayed++;
+                
                 
                 if(homeID == teamID){
                     goalsFor = goalsFor + homeGoals;
                     goalsAgainst = goalsAgainst + awayGoals;
+                    gamesPlayed++;
                     
                     if(homeGoals > awayGoals){
                         winCount++;
@@ -237,6 +238,7 @@ public class Game extends DBConnection {
                 }else if(awayID == teamID){
                     goalsFor = goalsFor + awayGoals;
                     goalsAgainst = goalsAgainst + homeGoals;
+                    gamesPlayed++;
                     
                     if(awayGoals > homeGoals){
                         winCount++;
