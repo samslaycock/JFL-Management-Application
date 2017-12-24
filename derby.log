@@ -1,14 +1,14 @@
-Thu Dec 14 17:28:59 GMT 2017 : Apache Derby Network Server - 10.11.1.2 - (1629631) started and ready to accept connections on port 1527
+Sun Dec 24 14:25:00 GMT 2017 : Apache Derby Network Server - 10.11.1.2 - (1629631) started and ready to accept connections on port 1527
 ----------------------------------------------------------------
-Thu Dec 14 17:28:59 GMT 2017:
-Booting Derby version The Apache Software Foundation - Apache Derby - 10.11.1.2 - (1629631): instance a816c00e-0160-5612-797a-00003360e420 
-on database directory C:\Users\User\Documents\GitHub\JFL-Management-Application\jflDB with class loader sun.misc.Launcher$AppClassLoader@144bcfa 
-Loaded from file:/C:/Program%20Files%20(x86)/Java/jdk1.8.0_151/db/lib/derby.jar
+Sun Dec 24 14:25:05 GMT 2017:
+Booting Derby version The Apache Software Foundation - Apache Derby - 10.11.1.2 - (1629631): instance a816c00e-0160-88e9-9d11-ffffa0919af0 
+on database directory C:\Users\blao\git\samslaycock\JFL-Management-Application\jflDB with class loader sun.misc.Launcher$AppClassLoader@1d44bcfa 
+Loaded from file:/C:/Program%20Files/Java/jdk1.8.0_144/db/lib/derby.jar
 java.vendor=Oracle Corporation
-java.runtime.version=1.8.0_151-b12
-user.dir=C:\Program Files (x86)\Java\jdk1.8.0_151\db
+java.runtime.version=1.8.0_144-b01
+user.dir=C:\Program Files\Java\jdk1.8.0_144\db
 os.name=Windows 10
-os.arch=x86
+os.arch=amd64
 os.version=10.0
-derby.system.home=C:\Users\User\Documents\GitHub\JFL-Management-Application
+derby.system.home=C:\Users\blao\git\samslaycock\JFL-Management-Application
 Database Class Loader started - derby.database.classpath=''

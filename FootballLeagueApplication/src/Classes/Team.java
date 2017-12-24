@@ -25,7 +25,7 @@ public class Team extends DBConnection {
     }
 
     /**
-     * Insert a new Player record into the database
+     * Insert a new Team record into the database
      *
      * teamID id of created team
      *
@@ -37,6 +37,7 @@ public class Team extends DBConnection {
         try {
             int maxCount;
             try {
+                //determine the current max teamID in the team table
                 final String countQuery = "SELECT Max(TeamID) AS maxCount FROM jfl.teams";
                 this.setQuery(countQuery);
                 this.runQuery();
@@ -46,39 +47,65 @@ public class Team extends DBConnection {
             } catch (SQLException sqle) {
                 maxCount = 0;
             }
+            //increment to create a new id for team being inserted
             maxCount++;
 
             PreparedStatement pstmt = getConnection().prepareStatement(insertStmt);
-
+                
+           
+            //insert fields into the statement
             pstmt.setInt(1, maxCount);
             pstmt.setString(2, teamName);
             pstmt.setInt(3, -1);
-
+            
+            
+            //execute insert statement, inserting the record
             pstmt.executeUpdate();
         } catch (SQLException sqle) {
             System.out.println("Exception when inserting team record:" + sqle.toString());
         }
     }
-
-    public void updateRecord(int id, final String firstname, final int captainID) {
-        final String updateStmt = "UPDATE jfl.teams SET TeamName='" + firstname + "',  CaptainID=" + captainID + " WHERE TeamID=" + id;
+    
+    
+    /**
+     * Update a Team record
+     *
+     * @param id TeamID of the team being updated
+     * @param teamName team name of the team being updated
+     * @param captainID captainID of the team being updated
+     * 
+     */
+    public void updateRecord(int id, final String teamName, final int captainID) {
+        //set up the update statement using the passed parameters
+        final String updateStmt = "UPDATE jfl.teams SET TeamName='" + teamName + "',  CaptainID=" + captainID + " WHERE TeamID=" + id;
         try {
+            //prepare update statement to update team record
             PreparedStatement pstmt = getConnection().prepareStatement(updateStmt);
+            //execute update statement, amending the team record
             pstmt.executeUpdate();
         } catch (SQLException sqle) {
             System.out.println("Exception when updating team record:" + sqle.toString());
         }
     }
 
+    /**
+     * Delete Team record, given the id
+     * 
+     * @param id TeamID of the team being deleted
+     */
     public void deleteRecord(int id) {
+        //Set up delete statement to dete record with passed id
         String deleteStmt = "DELETE FROM jfl.teams WHERE TeamID=" + id;
         try {
+            //prepare delete statement
             PreparedStatement pstmt = getConnection().prepareStatement(deleteStmt);
+            //execute delete statement to delete the team record
             pstmt.executeUpdate();
         } catch (SQLException sqle) {
             System.out.println("Exception when deleting team record:" + sqle.toString());
         }
-
+        
+        //clears team id of deleted team from players in it
         deleteStmt = "UPDATE jfl.players SET TeamID=0 WHERE TeamID=" + id;
         try {
             PreparedStatement pstmt = getConnection().prepareStatement(deleteStmt);
@@ -86,7 +113,8 @@ public class Team extends DBConnection {
         } catch (SQLException sqle) {
             System.out.println("Exception when updating player record:" + sqle.toString());
         }
-
+        
+        //clears team id of deleted team from coaches in it
         deleteStmt = "UPDATE jfl.coaches SET TeamID=0 WHERE TeamID=" + id;
         try {
             PreparedStatement pstmt = getConnection().prepareStatement(deleteStmt);
@@ -95,6 +123,7 @@ public class Team extends DBConnection {
             System.out.println("Exception when updating coach record:" + sqle.toString());
         }
 
+        //clears team id of deleted team from managers in it
         deleteStmt = "UPDATE jfl.managers SET TeamID=0 WHERE TeamID=" + id;
         try {
             PreparedStatement pstmt = getConnection().prepareStatement(deleteStmt);
@@ -105,15 +134,24 @@ public class Team extends DBConnection {
 
     }
 
+    /**
+     *  Loads the data of a team record, given the team's id
+     * 
+     * @param teamID TeamID of the team
+     * 
+     * @return teamRecord - array holding the details of the team record
+     */
     public Object[] loadDetails(final int teamID) {
         Object[] teamRecord = new Object[3];
         try {
+            //select the team record from the table where team id matches the given teamID
             final String allQuery = "SELECT * FROM jfl.teams WHERE TeamID=" + teamID;
             this.setQuery(allQuery);
             this.runQuery();
             ResultSet output = this.getResultSet();
             output.next();
 
+            //load the team record data into an array
             teamRecord[0] = output.getString("TeamID");
             teamRecord[1] = output.getString("TeamName");
             teamRecord[2] = output.getString("CaptainID");
@@ -123,10 +161,17 @@ public class Team extends DBConnection {
         }
         return teamRecord;
     }
-
+    
+    
+    /**
+     * Loads all of the team records into a 2d array
+     * 
+     * @return teamRecords
+     */
     public Object[][] loadAllTeams() {
         int recordCount;
         try {
+            //Determine how many team records are in the table
             final String countQuery = "SELECT COUNT(TeamID) AS teamCount FROM jfl.teams";
             this.setQuery(countQuery);
             this.runQuery();
@@ -143,9 +188,12 @@ public class Team extends DBConnection {
         int captainID = 0;
         String captainName = "No Captain";
         try {
+            //selects all of the team records
             final String allQuery = "SELECT * FROM jfl.teams";
             this.setQuery(allQuery);
             this.runQuery();
+            
+            //load the team record into an array
             ResultSet output = this.getResultSet();
             while ((output.next()) && (arrayCount < recordCount)) {
                 captainID = Integer.parseInt(output.getString("CaptainID"));
@@ -177,9 +225,16 @@ public class Team extends DBConnection {
         return teamRecords;
     }
 
+     /**
+     * Used to populate combo box with team names
+     * 
+     * @return comboArray - array with all the team names to be loaded into 
+     * a combo box
+     */
     public String[] populateTeamComboBox() {
         int recordCount;
         try {
+            //Determine the number of teams
             final String countQuery = "SELECT COUNT(TeamID) AS teamCount FROM jfl.teams";
             this.setQuery(countQuery);
             this.runQuery();
@@ -191,6 +246,7 @@ public class Team extends DBConnection {
             System.out.println("Exception when getting Team count:" + sqle.toString());
         }
 
+        //Determines the team's name
         String[] comboArray = new String[recordCount];
         int arrayCount = 0;
         try {
@@ -210,10 +266,22 @@ public class Team extends DBConnection {
         return comboArray;
     }
 
+    
+     /**
+     * Gets the team name of a given teamID
+     * 
+     * @param teamid TeamID of the team
+     * 
+     * @return teamName name of the team 
+     */
     public String getTeamName(int teamid) {
+        
+        //Determines the team name
         String teamName = "No Team";
+        //If teamID is greater than 0
         if (teamid > 0) {
             try {
+                //Select team name from record which matches with the ID
                 final String allQuery = "SELECT TeamName FROM jfl.teams WHERE TeamID=" + teamid;
                 this.setQuery(allQuery);
                 this.runQuery();
