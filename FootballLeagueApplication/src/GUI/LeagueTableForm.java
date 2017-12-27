@@ -140,10 +140,16 @@ public class LeagueTableForm extends javax.swing.JFrame {
         });
     }
     
+    /**
+     * Method which loads all of the teams into the league table, calling the 
+     * loadLeagueMethod from Game which generates an array with all the correct fields
+     * which is then added as a row in the league table
+     * 
+     * Method is sorted in descending order, with the team with the highest points displayed
+     * at the top of the table.
+     */
     private void loadLeagueTable(){
         DefaultTableModel model =(DefaultTableModel) tableLeagueTable.getModel();
-  
-        //tableLeagueTable.setAutoCreateRowSorter(true);
       
         model.setRowCount(0);
         

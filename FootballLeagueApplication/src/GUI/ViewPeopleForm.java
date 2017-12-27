@@ -160,6 +160,10 @@ public class ViewPeopleForm extends javax.swing.JFrame {
         });
     }
     
+    /**
+     * Method which loads every person in the Database into a JTable, combining
+     * the information of all players, coaches, managers, and referees
+     */
     private void loadPeopleTable(){
         DefaultTableModel model =(DefaultTableModel) tablePeople.getModel();
       

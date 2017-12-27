@@ -548,6 +548,9 @@ public class UpdateGameSetForm extends javax.swing.JFrame {
         });
     }
     
+    /**
+     * Method which populates a combo-box with all the names of the teams in the Teams table.
+     */
     private void cmbTeamPopulate(){
         Team t = new Team("jflDB");
         String[] teams = t.populateTeamComboBox();
@@ -562,6 +565,9 @@ public class UpdateGameSetForm extends javax.swing.JFrame {
         t.closeConnection(); 
     }
     
+    /**
+     * Method which populates a combo-box with all the names of the referees
+     */
     private void loadReferees(){
         Referee r = new Referee("jflDB");
         Object[][] refereeRecords = r.loadAllReferees();
@@ -579,6 +585,14 @@ public class UpdateGameSetForm extends javax.swing.JFrame {
         
     }
     
+    /** Method which automatically selects the teams for both games, making sure that each team plays
+     * one game home, and one game away. 
+     * 
+     * It also makes sure that the game can't be made to have the Home team and Away team be the same,
+     * instead setting the selection of the combo-box to nothing. 
+     * 
+     * @param teamBox String which says which box is changed, either "HOME" or "AWAy"
+     */
     private void cmbTeamSelect(String teamBox){
         int selectedIndex;
         int otherIndex;
@@ -606,6 +620,11 @@ public class UpdateGameSetForm extends javax.swing.JFrame {
           
     }
     
+    /** Method which loads the details of the gameSet into the form, given the relevant gameSet
+     * 
+     * @param gameSet GameSet is an id which links the two games teams play against each other
+     * with games being played so that both teams play as home once and away once. 
+     */
     private void loadGameSet(int gameSet){
         Game g = new Game("jflDB");
         Object[][] gameSetRecord = g.loadDetails(gameSet);

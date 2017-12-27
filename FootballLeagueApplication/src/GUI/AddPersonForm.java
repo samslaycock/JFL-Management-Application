@@ -279,6 +279,9 @@ public class AddPersonForm extends javax.swing.JFrame {
         });
     }
     
+    /**
+     * Method which displays/hides certain elements based on the selected person type
+     */
     private void displayElements() {
         int selectedIndex;
         selectedIndex = cmbPersonType.getSelectedIndex();
@@ -299,6 +302,9 @@ public class AddPersonForm extends javax.swing.JFrame {
         }
     }
     
+    /**
+     * Method to populate to combo-boxes with the names of the listed teams in the database
+     */
     private void cmbTeamPopulate(){
         Team t = new Team("jflDB");
         String[] teams = t.populateTeamComboBox();
@@ -310,6 +316,10 @@ public class AddPersonForm extends javax.swing.JFrame {
         t.closeConnection(); 
     }
     
+    /**
+     * Method to clear the form of inputted data when a person has been added,
+     * allowing for another to be added quickly after
+     */
     private void recordAdded(){
         JOptionPane.showMessageDialog(this, "Record successfully added.");
         cmbPersonType.setSelectedIndex(-1);

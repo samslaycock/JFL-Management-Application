@@ -152,7 +152,10 @@ public class ViewGamesForm extends javax.swing.JFrame {
         });
     }
     
-    
+   /**
+    * Method which calls the details of a game via a method, takes the data from the
+    * returned array, and then place each game as a row in the table.
+    */
    private void loadGames(){
         DefaultTableModel model =(DefaultTableModel) tableGames.getModel();
          model.setRowCount(0);

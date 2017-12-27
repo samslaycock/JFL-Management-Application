@@ -5,6 +5,7 @@
  */
 package Main;
 
+import Connection.DBConnection;
 import GUI.MenuForm;
 
 /**
@@ -19,6 +20,9 @@ public class FootballLeagueApplication {
      */
     public static void main(String[] args) {
         // TODO code application logic here
+        DBConnection db = new DBConnection();
+        db.connectDatabase("jflDB");
+        
         MenuForm menu = new MenuForm();
         menu.setVisible(true);
     }

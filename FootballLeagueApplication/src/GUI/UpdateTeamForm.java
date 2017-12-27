@@ -281,6 +281,11 @@ public class UpdateTeamForm extends javax.swing.JFrame {
         });
     }
     
+    /**
+     * Method which loads the details of a team given it's id into the form
+     * 
+     * @param id TeamID of the team we're updating
+     */
     private void loadDetails(int id){
         int captainID;
         String firstName;
@@ -305,6 +310,12 @@ public class UpdateTeamForm extends javax.swing.JFrame {
         
     }
     
+    /**
+     * Method which loads all of the team members into the table,
+     * given the TeamID of the team we're updating
+     * 
+     * @param id TeamID which we're loading players from
+     */
     private void loadTeamPlayers(int id){
         DefaultTableModel model =(DefaultTableModel) tablePlayers.getModel();
       

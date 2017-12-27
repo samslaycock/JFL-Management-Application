@@ -179,6 +179,10 @@ public class ViewTeamMembersForm extends javax.swing.JFrame {
         });
     }
     
+    
+    /**
+     * Method which populates team combo-boxes with the names of the teams from the teams table
+     */
     private void cmbTeamPopulate(){
         Team t = new Team("jflDB");
         String[] teams = t.populateTeamComboBox();
@@ -191,6 +195,12 @@ public class ViewTeamMembersForm extends javax.swing.JFrame {
         
     }
     
+    /**
+     * Method which loads all members of a team (anyone with the associated team id in their record),
+     * into the table, adding each one as an individual row
+     * 
+     * @param teamid TeamID of the team we're loading members of
+     */
     private void loadTeamMembers(int teamid){
         DefaultTableModel model =(DefaultTableModel) tableTeamMembers.getModel();
        

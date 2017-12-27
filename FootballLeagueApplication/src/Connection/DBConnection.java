@@ -18,6 +18,9 @@ public class DBConnection {
     private ResultSet dataRS = null;
     private String query = null;
 
+    /**Loads sun driver for connection to database
+     * 
+     */
     private void loadDriver() {
         //TRY LOADING SUN DRIVER
         try {
@@ -33,7 +36,12 @@ public class DBConnection {
         }//END catch
     }//END loadDriver()
 
-    public void connectDatabase(final String dbName) {
+    
+    /** Method to connect to database, given the name of the database
+     * 
+     * @param dbName name of the database we're connecting to
+     */
+    public void connectDatabase(final String dbName)    {
         try {
             //CONNECT TO DATABASE
             loadDriver();
@@ -44,6 +52,9 @@ public class DBConnection {
         }//END catch
     }//END connectDatabase()
 
+    /**
+     * Method to run the set query string
+     */
     public void runQuery() {
         try {
             //CREATE A STATEMENT OBJECT FOR THE ALUMNI CONNECTION

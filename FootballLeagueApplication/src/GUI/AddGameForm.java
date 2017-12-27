@@ -520,6 +520,9 @@ public class AddGameForm extends javax.swing.JFrame {
         });
     }
     
+    /**
+     * Method which populates team combo-boxes with the names of the teams from the teams table
+     */
     private void cmbTeamPopulate(){
         Team t = new Team("jflDB");
         String[] teams = t.populateTeamComboBox();
@@ -534,6 +537,9 @@ public class AddGameForm extends javax.swing.JFrame {
         t.closeConnection(); 
     }
     
+    /**
+     * Method which loads the names of Referees into the referee combo-box
+     */
     private void loadReferees(){
         Referee r = new Referee("jflDB");
         Object[][] refereeRecords = r.loadAllReferees();
@@ -551,6 +557,11 @@ public class AddGameForm extends javax.swing.JFrame {
         
     }
     
+    /**
+     * Method which sets automatically the selections for the teams in the second game of the game set
+     * 
+     * @param teamBox the box which has been changed, if it's the home box, or away team box
+     */
     private void cmbTeamSelect(String teamBox){
         int selectedIndex;
         int otherIndex;

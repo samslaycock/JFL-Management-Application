@@ -405,6 +405,9 @@ public class UpdatePersonForm extends javax.swing.JFrame {
 
     }
 
+    /**
+     * Method which displays/hides certain elements based on the selected person type
+     */
     private void displayElements() {
         int selectedIndex;
         selectedIndex = cmbPersonType.getSelectedIndex();
@@ -424,7 +427,10 @@ public class UpdatePersonForm extends javax.swing.JFrame {
             }
         }
     }
-
+    
+    /**
+     * Method to populate to combo-boxes with the names of the listed teams in the database
+     */
     private void cmbTeamPopulate() {
         Team t = new Team("jflDB");
         String[] teams = t.populateTeamComboBox();

@@ -94,6 +94,13 @@ public class SelectTeamForm extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    
+    /**
+     * Method which opens up the UpdateTeamForm, loaded with the specific details of a team to change
+     * based on the row/record which is clicked in the table.
+     * 
+     * @param evt MouseEvent when a row in the table is clicked 
+     */
     private void tableTeamsMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tableTeamsMouseClicked
         // TODO add your handling code here:
         int selectedRow = tableTeams.getSelectedRow();
@@ -146,6 +153,11 @@ public class SelectTeamForm extends javax.swing.JFrame {
         });
     }
     
+    /**
+     * Method which loads each of the teams, and some of the data relating to each one,
+     * into an array, which is then added as a row in the table. 
+     * 
+     */
     private void loadTeamTable(){
         DefaultTableModel model =(DefaultTableModel) tableTeams.getModel();
          model.setRowCount(0);
