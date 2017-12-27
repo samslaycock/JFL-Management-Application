@@ -2,6 +2,16 @@
 <project-private xmlns="http://www.netbeans.org/ns/project-private/1">
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
-        <group/>
+        <group>
+            <file>file:/C:/Users/blao/git/samslaycock/JFL-Management-Application/FootballLeagueApplication/src/GUI/UpdateTeamForm.java</file>
+            <file>file:/C:/Users/blao/git/samslaycock/JFL-Management-Application/FootballLeagueApplication/src/GUI/AddGameForm.java</file>
+            <file>file:/C:/Users/blao/git/samslaycock/JFL-Management-Application/FootballLeagueApplication/src/GUI/ViewPeopleForm.java</file>
+            <file>file:/C:/Users/blao/git/samslaycock/JFL-Management-Application/FootballLeagueApplication/src/Connection/DBConnection.java</file>
+            <file>file:/C:/Users/blao/git/samslaycock/JFL-Management-Application/FootballLeagueApplication/src/Main/FootballLeagueApplication.java</file>
+            <file>file:/C:/Users/blao/git/samslaycock/JFL-Management-Application/FootballLeagueApplication/src/GUI/ViewGamesForm.java</file>
+            <file>file:/C:/Users/blao/git/samslaycock/JFL-Management-Application/FootballLeagueApplication/src/GUI/AddTeamForm.java</file>
+            <file>file:/C:/Users/blao/git/samslaycock/JFL-Management-Application/FootballLeagueApplication/src/GUI/ViewTeamMembersForm.java</file>
+            <file>file:/C:/Users/blao/git/samslaycock/JFL-Management-Application/FootballLeagueApplication/src/GUI/MenuForm.java</file>
+        </group>
     </open-files>
 </project-private>

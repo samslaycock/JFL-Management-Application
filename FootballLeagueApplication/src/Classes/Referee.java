@@ -47,7 +47,7 @@ public class Referee extends DBConnection {
                 this.runQuery();
                 ResultSet output = this.getResultSet();
                 output.next();
-                maxCount = output.getInt("recordCount");
+                maxCount = output.getInt("maxCount");
             } catch (SQLException sqle) {
                 maxCount = 0;
             }
