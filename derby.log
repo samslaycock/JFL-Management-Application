@@ -12,3 +12,5 @@ os.arch=amd64
 os.version=10.0
 derby.system.home=C:\Users\blao\git\samslaycock\JFL-Management-Application
 Database Class Loader started - derby.database.classpath=''
+----------------------------------------------------------------
+Wed Dec 27 23:22:17 GMT 2017: Shutting down Derby engine
